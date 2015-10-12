@@ -19,13 +19,13 @@ function(Marionette, config) {
       this.model = window.app.user;
     },
 
+
     logout: function() {
-      $.ajax({
-        context: this,
-        url: config.coreUrl + 'security/logout',
-      }).done(function() {
-        Backbone.history.navigate('login', {trigger: true});
-      });
+
+
+
+
+
     },
 
     onShow: function() {

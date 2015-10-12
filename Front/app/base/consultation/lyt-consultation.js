@@ -1,16 +1,23 @@
-define(['marionette', 'backbone'],
-function(Marionette,Backbone) {
+define(['marionette', 'backbone', 'modTopic', 'i18n'],
+function(Marionette, Backbone, ModTopic) {
   'use strict';
 
   return Marionette.LayoutView.extend({
-    template: 'app/base/home/tpl/tpl-home.html',
-    className: 'home-page ns-full-height',
+    template: 'app/base/consultation/tpl/tpl-consultation.html',
+    className: 'consultation-page ns-full-height',
     events: {
-      'click .accButton':'menuItemClick'
     },
 
-    initialize: function() {
+    initialize: function(options) {
+      this.options = options;
       this.model = window.app.user;
+      var topic = new ModTopic({id:options.key});
+      topic.fetch({async:false});
+      this.topic = topic;
+    },
+
+    serializeData: function(){
+      return {topic : this.topic.attributes};
     },
 
     animateIn: function() {
@@ -34,10 +41,5 @@ function(Marionette,Backbone) {
     onShow: function(options) {
 
     },
-    menuItemClick: function(e){
-    	//console.log(this);
-    	console.log(app);
-    	app.router.navigate('#' + e.currentTarget.id,{trigger: true});
-    }
   });
 });

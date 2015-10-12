@@ -6,22 +6,7 @@ html, body{
 }
 
 body{
-	background: url(./img/loader.gif) center center no-repeat #333;
-}
-
-body.app{
-	main{
-		padding-top: 50px;
-	}
-	header{
-		display: block;
-	}
-}
-main{
-	height: 100%;
-}
-header{
-	display: none;
+	background: #333;
 }
 
 .container{
@@ -112,3 +97,37 @@ li.list-group-item{
 	clear : both;
 	float: none;
 }
+#rgTree{
+	padding-top: 50px;
+}
+	textarea{
+		margin-left: 7%;
+		width: 80%;
+		height: 100px;
+	}
+	input:disabled{
+		background-color: rgba(128, 96, 96, 0.28);
+	}
+	input:disabled:hover{
+		cursor: auto;
+	}
+	textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{
+		border-radius: 2px;
+		display: inline-block;
+	}
+	input[type="text"]{
+		margin-left: 7%;
+		height: 25px;
+		width: 80%;
+	}
+	label{
+		display: inline-block;
+	}
+	div[name=TTop_Date]{
+		margin-left: 7%;
+	}
+	fieldset{
+		label{
+			margin-left: 7%;
+		}
+	}

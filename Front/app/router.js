@@ -4,38 +4,23 @@
   - set login as marionette.application
 
 **/
-define(['jquery', 'marionette', 'backbone', 'config', './base/login/lyt-login',
+define(['jquery', 'marionette', 'backbone', 'config',
   './base/header/lyt-header',],
-  function($, Marionette, Backbone, config, LytLogin, LytHeader) {
+  function($, Marionette, Backbone, config) {
 
 'use strict';
 return Marionette.AppRouter.extend({
   appRoutes: {
-    '*route(/:page)': 'home',
+    'consultation(/:id)': 'consultation',
+    'modification(/:id)': 'modification',
+    'creation(/:id)': 'creation',
+    'creation': 'creation',
+    'suppression(/:id)': 'suppression',
+    'language(/:id)': 'language',
+    'language': 'language',
+    'language/manage(/:id)': 'languageManage',
+    'language/manage': 'languageManage',
+    '*route(/:page)': 'home'
   },
-
-  execute: function(callback, args) {
-    $.ajax({
-      context: this,
-      url: config.coreUrl + 'security/has_access',
-    }).done(function() {
-      $('body').addClass('app');
-      this.insertHeader();
-      callback.apply(this, args);
-    }).fail(function(msg) {
-      $('body').removeClass('app');
-      window.app.rootView.rgHeader.empty();
-      window.app.rootView.rgMain.show(new LytLogin());
-      Backbone.history.navigate('login', {trigger: true});
-    });
-  },
-
-  insertHeader: function() {
-    if (!window.app.rootView.rgHeader.hasView()) {
-      window.app.rootView.rgHeader.show(
-        new LytHeader({app: this.options.app}));
-    }
-  },
-
 });
 });

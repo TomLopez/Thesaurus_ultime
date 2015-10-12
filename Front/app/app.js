@@ -17,31 +17,14 @@ define(['marionette', 'backbone', 'moment',
      app = new Marionette.Application();
 
      app.on('start', function() {
-       var _this = this;
-       var Patern = Backbone.Model.extend({
-         urlRoot: config.infosUrl,
-       });
-
-       var model = new Patern();
-       model.fetch({
-         success: function() {
-           model.set('siteClassName', model.get('title').replace(/ /g,'-'));
-
-           app.siteInfo = model;
-           app.rootView = new LytRootview();
-           app.rootView.render();
-           app.controller = new Controller({app: app});
-           app.router = new Router({controller: app.controller, app: app});
-           app.user = new Backbone.Model({
+       app.rootView = new LytRootview();
+       app.rootView.render();
+       app.controller = new Controller({app: app});
+       app.router = new Router({controller: app.controller, app: app});
+       app.user = new Backbone.Model({
              user: 'Admin User',
            });
-           Backbone.history.start();
-         },
-
-         error: function() {
-           //TODO : choose the default behavior
-         },
-       });
+       Backbone.history.start();
      });
 
      $(document).ajaxStart(function(e) {
