@@ -20,6 +20,7 @@ return Marionette.AppRouter.extend({
     'language': 'language',
     'language/manage(/:id)': 'languageManage',
     'language/manage': 'languageManage',
+    'test':'test',
     '*route(/:page)': 'home'
   },
 });

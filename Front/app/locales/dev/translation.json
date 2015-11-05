@@ -1,7 +1,38 @@
 {
 	"tiles" :{
-		"input" : "entry"
+		"input" : "tarace"
 
+	},
+	"tree":{
+		"checkbox_useless_node":"test_dev"
+	},
+	"topic_field": {
+		"field_name": "tarace",
+		"field_nameFr": "tarace* :",
+		"field_nameEn": "tarace* :",
+		"field_definitionFr": "tarace",
+		"field_definitionEn": "tarace",
+		"field_type": "tarace",
+		"field_date": "tarace",
+		"field_fullpath": "tarace",
+		"field_fullpathEn": "tarace",
+		"field_parentId": "taraceD :",
+		"field_branchOrder": "taraceh :",
+		"field_isDeprecated": "tarace",
+		"field_addProperty_label": "tarace",
+		"field_addProperty_button": "tarace",
+		"field_isDeprecated_yesValue": "tarace",
+		"field_isDeprecated_noValue": "tarace",
+		"zone_libelle": "tarace"
+	},
+	"topicLibelle_field":
+	{
+		"lib_name":"Translated name",
+		"lib_fullPath":"Translated fullpath",
+		"lib_Definition":"Translated definition",
+		"lib_FKLangue":"Lnguage",
+		"lib_FKTopic":"Topic's key",
+		"lib_PKLibelle":"Libelle's key"
 	}
 
 

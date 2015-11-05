@@ -14,14 +14,17 @@ require.config({
     lytRootview: './base/rootview/lyt-rootview',
     modTopic: './models/mod-topic',
     modLanguage: './models/mod-language',
+    modTopicLibelle: './models/mod-topicLibelle',
     transitionRegion: './base/transition-region/transition-region',
     translater: 'translater',
     /*==========  Bower  ==========*/
+    'requirejs-text': '../bower_components/requirejs-text/text',
     jquery: '../bower_components/jquery/jquery.min',
     jqueryui: '../bower_components/jqueryui/jquery-ui.min',
     underscore: '../bower_components/underscore/underscore',
     backbone: '../bower_components/backbone/backbone',
-    backboneForms: '../bower_components/backbone-forms/distribution.amd/backbone-forms.min',
+    backbone_forms: '../bower_components/backbone-forms/distribution.amd/backbone-forms.min',
+    'backbone.list': '../bower_components/backbone-forms/distribution.amd/editors/list',
     marionette: '../bower_components/marionette/lib/core/backbone.marionette',
     'backbone.babysitter': '../bower_components/backbone.babysitter/' +
     'lib/backbone.babysitter',
@@ -38,7 +41,8 @@ require.config({
     fancytree_filter: './vendors/Fancytree/src/jquery.fancytree.filter',
     jquery182: './vendors/jquery-1.8.2',
     jqueryui182: './vendors/jquery-ui-1.8.24.min',
-    sweetAlert: '../bower_components/sweetalert/lib/sweet-alert.min'
+    sweetAlert: '../bower_components/sweetalert/lib/sweet-alert.min',
+    listOfNestedModel: '../bower_components/nsBackbonesTools/ListOfNestedModel/ListOfNestedModel'
   },
 
   shim: {
@@ -101,11 +105,30 @@ require.config({
       deps: ['jquery'],
       exports: '$',
     },
+    listOfNestedModel: {
+    deps: [
+            'backbone',
+             'backbone_forms'
+            ]
+    },
   },
+  packages:[
+    {
+        name: 'listOfNestedModel',
+        location: '../bower_components/nsBackbonesTools/ListOfNestedModel',
+        main: 'listOfNestedModel'
+    },
+  ]
 });
 
 require(['app', 'templates','translater'],
 function(app, templates, Translater) {
-  app.start();
-  this.translater = Translater.getTranslater();
+  app.user = new Backbone.Model({
+    user: 'Admin User',
+    language: 'fr'
+  });
+  this.translater = Translater.setTranslater(app.user.get('language'));
+  setTimeout(function(){ app.start(); }, 0);
+
+//  this.translater = Translater.getTranslater();
 });

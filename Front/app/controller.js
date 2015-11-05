@@ -4,6 +4,7 @@ define(['marionette',
 	'./base/home/lyt-home',
   './base/consultation/lyt-consultation',
   './base/modification/lyt-modification',
+  './base/tree/lyt-tree',
   './base/creation/lyt-creation',
   './base/language/lyt-language',
   './base/language/lyt-languageManaging',
@@ -15,7 +16,7 @@ define(['marionette',
   'fancytree_dnd',
   'treeView',
 ], function(Marionette, Backbone, config,
-	LytHome, LytConsultation, LytModification,
+	LytHome, LytConsultation, LytModification, LytTree,
   LytCreation, LytLanguage, LytLanguageManaging, swal,$,ui
 ) {
   'use strict';
@@ -77,6 +78,10 @@ define(['marionette',
     languageManage: function(options){
       console.log('langage',options);
       this.rgMain.show(new LytLanguageManaging({key: options}));
+    },
+    test: function(options){
+      this.rgMain.show(new LytTree({options: 'fr'}));
+
     }
   });
 });

@@ -4,10 +4,13 @@
 	apiUrl: 'http://localhost:56121/api/thesaurus',
 	language: 'fr',
 	initialize: function (data) {
+		console.log('data',data);
+		this.language = data.toLowerCase();
 		this.template = _.template(this.constructor.templateSrc);
 	},
 	render: function () {
 		_this = this;
+		console.log('inthetreee',this);
 		this.$el.html(this.template());
 		//var isSelectedCheckBox = false;
 		this.tree = this.$el.find('#treeView').fancytree({
@@ -39,7 +42,7 @@
 			source: {
 				type: "GET",
 				//url: _this.apiUrl + "/" + tabStrWebservice['init'],
-				url: _this.apiUrl + "/fastInitForCompleteTree?StartNodeID=0&lng=fr",
+				url: _this.apiUrl + "/fastInitForCompleteTree?StartNodeID=0&lng="+this.language+"&deprecated=true",
 				datatype: 'json',
 //				contentType: "application/json; charset=utf-8",
 				//data: //'{ "StartNodeID":0,"lng" : "' + _this.language + '" }',
@@ -240,18 +243,24 @@ checkboxHideMode.change(function (e) {
 				 //}
 				});
 checkboxUndeprecateMode.change(function () {
+	var deprec;
 	if ($(this).is(":checked")) {
-		tabStrWebservice['init'] = 'initTreeLazyWLanguageWithoutDeprecated';
-		tabStrWebservice['lazyLoad'] = 'getTreeChildWLanguageWithoutDeprecated';
-		tabStrWebservice['research'] = 'researchTopicWLanguageWithoutDeprecated';
+		deprec = 'false';
 	} else {
-		tabStrWebservice['init'] = 'initTreeLazyWLanguage';
-		tabStrWebservice['lazyLoad'] = 'getTreeChildWLanguage';
-		tabStrWebservice['research'] = 'researchTopicWLanguage';
+		deprec = 'true';
 	}
-				 //console.log(tabStrWebservice);
-				 $("#treeView").fancytree("getTree").reload();
-				});
+	//console.log(tabStrWebservice);
+	$("#treeView").fancytree("getTree").reload({
+		type: "GET",
+		url: _this.apiUrl + "/fastInitForCompleteTree?StartNodeID=0&lng=fr&deprecated=" + deprec,
+		datatype: 'json',
+		/*type: "POST",
+		url: readUrl + "/" + tabStrWebservice['init'],
+		datatype: 'json',
+		contentType: "application/json; charset=utf-8",
+		data: '{ "StartNodeID":0,"lng" : "' + language + '", "deprecated": "'+deprec+'"}',*/
+	});
+});
 buttonReset.click(function (e) {
 	resetResearch();
 }).attr("disabled", true);
@@ -261,108 +270,65 @@ var rschTimeout;
 inputResearch.keyup(function (e) {
 	var treeHtml = $("#treeView");
 	var fancytree = treeHtml.fancytree("getTree");
-					//Si le nombre d'élément est < a 100 on oblige l'utilisation d'au moins trois caractères pour des raisons de performance
-					if (fancytree.count() < 100 || $(this).val().length >= 3) {
-						buttonReset.attr("disabled", false);
-						treeHtml.find('ul.fancytree-container li').css("padding", "1px 0 0 0");
-						treeHtml.fancytree("getRootNode").visit(function (node) {
-							if (node.span) {
-								var className = node.span.className;
-								if (className.indexOf('fancytree-hide') != -1) {
-									node.setExpanded(false);
-								}
-							} else {
-								node.setExpanded(false);
-							}
-						});
-						match = $(this).val();
-						var n,
-						match = $(this).val();
+	//Si le nombre d'élément est < a 100 on oblige l'utilisation d'au moins trois caractères pour des raisons de performance
+	if (fancytree.count() < 100 || $(this).val().length >= 3) {
+		buttonReset.attr("disabled", false);
+		treeHtml.find('ul.fancytree-container li').css("padding", "1px 0 0 0");
+		treeHtml.fancytree("getRootNode").visit(function (node) {
+			if (node.span) {
+				var className = node.span.className;
+				if (className.indexOf('fancytree-hide') != -1) {
+					node.setExpanded(false);
+				}
+			} else {
+				node.setExpanded(false);
+			}
+		});
+		match = $(this).val();
+		var n,
+		match = $(this).val();
 
-						if (e && e.which === $.ui.keyCode.ESCAPE || $.trim(match) === "") {
-							resetResearch();
-						}
-						n = fancytree.filterNodes(match, false);
-						while (treeHtml.find('.fancytree-submatch:not(.fancytree-expanded)').find('.fancytree-expander').length) {
-							treeHtml.find('.fancytree-submatch:not(.fancytree-expanded)').find('.fancytree-expander').click();
-						}
-						if (treeHtml.find('.fancytree-match').length < 3 && treeHtml.find('.fancytree-match').find('.fancytree-match').length)
-							treeHtml.find('.fancytree-match').find('.fancytree-expander').click()
-						treeHtml.find('ul.fancytree-container li').css("padding", "0px 0 0 0");
-					}
-					if ($(this).val().length == 0) {
-						fancytree.clearFilter();
-						treeHtml.fancytree("getRootNode").visit(function (node) {
-							node.setExpanded(false);
-						});
-						return;
-					}
-				}).focus()
+		if (e && e.which === $.ui.keyCode.ESCAPE || $.trim(match) === "") {
+			resetResearch();
+		}
+		n = fancytree.filterNodes(match, false);
+		while (treeHtml.find('.fancytree-submatch:not(.fancytree-expanded)').find('.fancytree-expander').length) {
+			treeHtml.find('.fancytree-submatch:not(.fancytree-expanded)').find('.fancytree-expander').click();
+		}
+		if (treeHtml.find('.fancytree-match').length < 3 && treeHtml.find('.fancytree-match').find('.fancytree-match').length)
+			treeHtml.find('.fancytree-match').find('.fancytree-expander').click()
+		treeHtml.find('ul.fancytree-container li').css("padding", "0px 0 0 0");
+	}
+	if ($(this).val().length == 0) {
+		fancytree.clearFilter();
+		treeHtml.fancytree("getRootNode").visit(function (node) {
+			node.setExpanded(false);
+		});
+		return;
+	}
+}).focus()
 return this;
 }
 }, {//Template des différents élément de l'arbre et de ses copains (menu, hidden, checkbox de dissimulation des elts inutiles,...)
 templateSrc: '<input type="text" class="treeItemTranslates" name="treeview-search" placeholder="" data-i18n="[placeholder]tree.search_placeholder" autocomplete="off">' +
-'<button id="reinit" class="treeItemTranslates" style=" margin-top: -11;margin-left: 22;" data-i18n="tree.search_button"></button>' +
-'<input type="hidden" id="research" value="" />' +
-'<input type="hidden" id="action" value="" />' +
-'<input type="hidden" id="unitaireInfo" value="" />' +
-'<span id="treeview-matches"></span>' +
-'<div style="display:block;"><input id="hideMode" style="margin-top:-1;" type="checkbox" checked><label id="hideLabel" style="display:inline;" class="treeItemTranslates" data-i18n="tree.checkbox_useless_node"></label></div>' +
-'<div style="display:block;"><input id="undeprecateMode" style="margin-top:-1; display:inline;" type="checkbox"><label id="undeprecateLabel" class="treeItemTranslates" style="display:inline;" data-i18n="tree.checkbox_deprecated_node"></label></div>' +
-'<label id="treeview-selectedValue"></label>' +
-'<div id="treeView" style="height: 95%"></div>' +
-'<ul class="contextMenu ui-helper-hidden">' +
-								'<li class="Créer"><a href="#creation" onclick="$(\'.contextmenu\').attr(\'style\', \'display:none\'); document.location=this.href;"><img src="Scripts/NavBar/images/Mark-To-Download-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.creerEnf">Créer Enfants</span></a></li>' +  //OK
-								'<li class="Consulter"><a href="#consultation" onclick="$(\'.contextmenu\').attr(\'style\', \'display:none\'); document.location=this.href;"><img src="Scripts/NavBar/images/Command-Paste-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.consulter">Consulter</span></a></li>' +  //OK
-							'<li class="Modifier"><a href="#modification" onclick="$(\'.contextmenu\').attr(\'style\', \'display:none\'); document.location=this.href;"><img src="Scripts/NavBar/images/Editor-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.modifier">Modifier</span></a></li>' +  //OK
-							'<li>---</li>' +
-							'<li class="Supprimer"><a href="#suppression" onclick="$(\'.contextmenu\').attr(\'style\', \'display:none\'); document.location.href=this.href"><img src="Scripts/NavBar/images/Garbage-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.supprimer">Supprimer</span></a></li>' +
-							'</ul>'
-						});
-
-//Fonction qui va expand les branches contenant les elts rechercher
-function expandAllSelected(listTopic, i) {
-	 //Le padding sert a créer de l'espace quand on fait une rechercher pour les termes ne se chevauchent pas
-	 $('ul.fancytree-container li').css("padding", "2px 0 0 0");
-	 var tree = $("#treeView").fancytree("getTree");
-	 tree.options.boolean.isExpand = true;
-	 var activeNode;
-	 //Si l'elts suivant est différents de -1 (l'elt avant -1 est l'elt rechercher par l'utilisateur
-		if (listTopic[i + 1] != -1) {
-			tree.activateKey("" + listTopic[i])
-			if (tree.getActiveNode() != null) {
-				 //On active le noeud puis on le récupère
-				 tree.activateKey("" + listTopic[i] + "");
-				 activeNode = tree.getActiveNode();
-				 //On expand le noeud actif
-				 return activeNode.setExpanded(true).then(function () {
-						//une fois le noeud étendu et les donnée de celui chargée on rappel la fonction
-						//afin de descendre plus bas dans la branche
-						return expandAllSelected(listTopic, i + 1);
-					});
-				}
-			//si listTopic[i + 1] == -1 l'elt listTopic[i + 2] est la racine de la prochaine branche
-			//Qui contient un elt rechercher
-		} else if (listTopic[i + 1] == -1 && listTopic[i + 2] !== undefined) {
-			return expandAllSelected(listTopic, i + 2);
-		} else {
-			if (Backbone.history.fragment.indexOf("creerEnf") != -1) {
-				var nodeForChild = tree.getActiveNode();
-				nodeForChild.setSelected();
-				$('ul.fancytree-container li').css("padding", "0px 0 0 0");
-				tree.options.boolean.isExpand = false;
-			} else if (Backbone.history.fragment.indexOf("modif") != -1) {
-				tree.getNodeByKey(tree.lastSelectedNode.key).setSelected(true);
-				$('ul.fancytree-container li').css("padding", "0px 0 0 0");
-				tree.options.boolean.isExpand = false;
-			} else {
-				 //On met le padding a zero une fois la recherche effectuée afin de resseré les termes utile
-				 $('ul.fancytree-container li').css("padding", "0px 0 0 0");
-				 tree.options.boolean.isExpand = false;
-				}
-				return $.Deferred().resolve().promise();
-			}
-		}
+			'<button id="reinit" class="treeItemTranslates" style=" margin-top: -11;margin-left: 22;" data-i18n="tree.search_button"></button>' +
+			'<input type="hidden" id="research" value="" />' +
+			'<input type="hidden" id="action" value="" />' +
+			'<input type="hidden" id="unitaireInfo" value="" />' +
+			'<span id="treeview-matches"></span>' +
+			'<div>'+
+			'<div style="display:inline-block;"><input id="hideMode" style="margin-top:-1;" type="checkbox" checked><label id="hideLabel" style="display:inline;" class="treeItemTranslates" data-i18n="tree.checkbox_useless_node"></label></div>' +
+			'<div style="display:inline-block;"><input id="undeprecateMode" style="margin-top:-1; display:inline;" type="checkbox"><label id="undeprecateLabel" class="treeItemTranslates" style="display:inline;" data-i18n="tree.checkbox_deprecated_node"></label></div>' +
+			'</div>'+
+			'<div id="treeView" style="height: 95%"></div>' +
+			'<ul class="contextMenu ui-helper-hidden">' +
+			'<li class="Créer"><a href="#creation" onclick="$(\'.contextmenu\').attr(\'style\', \'display:none\'); document.location=this.href;"><img class="img-context-menu" src="./app/styles/img/contextual-menu/Mark-To-Download-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.creerEnf">Créer Enfants</span></a></li>' +  //OK
+			'<li class="Consulter"><a href="#consultation" onclick="$(\'.contextmenu\').attr(\'style\', \'display:none\'); document.location=this.href;"><img class="img-context-menu" src="./app/styles/img/contextual-menu/Command-Paste-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.consulter">Consulter</span></a></li>' +  //OK
+			'<li class="Modifier"><a href="#modification" onclick="$(\'.contextmenu\').attr(\'style\', \'display:none\'); document.location=this.href;"><img class="img-context-menu" src="./app/styles/img/contextual-menu/Editor-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.modifier">Modifier</span></a></li>' +  //OK
+			'<li>---</li>' +
+			'<li class="Supprimer"><a href="#suppression" onclick="$(\'.contextmenu\').attr(\'style\', \'display:none\'); document.location.href=this.href"><img class="img-context-menu" src="./app/styles/img/contextual-menu/Garbage-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.supprimer">Supprimer</span></a></li>' +
+			'</ul>'
+		});
 
 		function confirmDrop(thisNode, otherNode, hitmode) {
 			var info;

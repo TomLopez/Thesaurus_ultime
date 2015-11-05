@@ -67,6 +67,7 @@ function(Marionette, Backbone, ModTopic, config) {
     },
     validation:function(){
       var _this = this;
+      console.log('this.topic',this.topic);
       this.form.commit();
       this.topic.save(null,{
         success: function() {

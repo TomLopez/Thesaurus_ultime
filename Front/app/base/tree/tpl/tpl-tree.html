@@ -1,0 +1,26 @@
+<div id="treeContainer">
+<input type="text" class="treeItemTranslates" name="treeview-search" placeholder="" data-i18n="[placeholder]tree.search_placeholder" autocomplete="off">
+<button id="reinit" class="treeItemTranslates" style=" margin-top: -11;margin-left: 22;" data-i18n="tree.search_button"></button>
+<input type="hidden" id="research" value="" />
+<input type="hidden" id="action" value="" />
+<input type="hidden" id="unitaireInfo" value="" />
+<span id="treeview-matches"></span>
+<div>
+	<div style="display:inline-block;">
+		<input id="hideMode" style="margin-top:-1;" type="checkbox" checked>
+		<label id="hideLabel" style="display:inline;" class="treeItemTranslates" data-i18n="tree.checkbox_useless_node"></label>
+	</div>
+	<div style="display:inline-block;">
+		<input id="undeprecateMode" style="margin-top:-1; display:inline;" type="checkbox">
+		<label id="undeprecateLabel" class="treeItemTranslates" style="display:inline;" data-i18n="tree.checkbox_deprecated_node"></label>
+	</div>
+</div>
+<div id="treeView" style="height: 95%"></div>
+<ul class="contextMenu ui-helper-hidden">
+	<li class="Créer"><a href="#creation" onclick="$('.contextmenu').attr('style', 'display:none'); document.location=this.href;"><img class="img-context-menu" src="./app/styles/img/contextual-menu/Mark-To-Download-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.creerEnf">Créer Enfants</span></a></li>
+	<li class="Consulter"><a href="#consultation" onclick="$('.contextmenu').attr('style', 'display:none'); document.location=this.href;"><img class="img-context-menu" src="./app/styles/img/contextual-menu/Command-Paste-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.consulter">Consulter</span></a></li>
+	<li class="Modifier"><a href="#modification" onclick="$('.contextmenu').attr('style', 'display:none'); document.location=this.href;"><img class="img-context-menu" src="./app/styles/img/contextual-menu/Editor-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.modifier">Modifier</span></a></li>
+	<li>---</li>
+	<li class="Supprimer"><a href="#suppression" onclick="$('.contextmenu').attr('style', 'display:none'); document.location.href=this.href"><img class="img-context-menu" src="./app/styles/img/contextual-menu/Garbage-48.png" /></br><span class="treeItemTranslates" data-i18n="contextualMenu_Label.supprimer">Supprimer</span></a></li>
+</ul>
+</div>

@@ -1,5 +1,13 @@
-define(['marionette', 'backbone', 'modTopic', 'backboneForms', 'config', 'i18n'],
-function(Marionette, Backbone, ModTopic, BackboneForm, config) {
+define(['marionette',
+  'backbone',
+  'translater',
+  'modTopic',
+  'modTopicLibelle',
+  'backbone_forms',
+  'listOfNestedModel',
+  'config',
+  'i18n'],
+function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneForm, ListOfNestedModel, config) {
   'use strict';
 
   return Marionette.LayoutView.extend({
@@ -46,10 +54,14 @@ function(Marionette, Backbone, ModTopic, BackboneForm, config) {
       }).render();
       this.form = form;
       $('#topicContainer').append(form.el);
+      console.log('this.model.user.get(language)',this.model);
+      this.$el.i18n();
     },
     validation:function() {
       var _this = this;
-      this.form.commit();
+      console.log('thisModifTopic', this.topic);
+      var testGege = this.form.commit();
+      console.log('testGege',testGege);
       this.topic.save(null,{
         success: function() {
           var tree = $('#' + config.treeDivId).fancytree('getTree');

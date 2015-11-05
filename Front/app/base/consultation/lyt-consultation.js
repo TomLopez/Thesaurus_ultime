@@ -1,5 +1,5 @@
-define(['marionette', 'backbone', 'modTopic', 'i18n'],
-function(Marionette, Backbone, ModTopic) {
+define(['marionette', 'backbone', 'modTopic', 'config', 'i18n'],
+function(Marionette, Backbone, ModTopic, config) {
   'use strict';
 
   return Marionette.LayoutView.extend({
@@ -13,11 +13,17 @@ function(Marionette, Backbone, ModTopic) {
       this.model = window.app.user;
       var topic = new ModTopic({id:options.key});
       topic.fetch({async:false});
+      console.log(this);
+      /*this.userLanguage =*/
       this.topic = topic;
     },
 
     serializeData: function(){
-      return {topic : this.topic.attributes};
+      return {
+        topic: this.topic.attributes,
+        refLangue: config.refLanguage,
+        langue: this.model.attributes.language
+      };
     },
 
     animateIn: function() {
@@ -39,7 +45,7 @@ function(Marionette, Backbone, ModTopic) {
     },
 
     onShow: function(options) {
-
+      this.$el.i18n();
     },
   });
 });

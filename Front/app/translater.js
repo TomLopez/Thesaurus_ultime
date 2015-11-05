@@ -10,7 +10,7 @@ define(['marionette','config','i18n'], function(Marionette, config) {
     initi18n: function() {
       i18n.init({
         resGetPath: this.url,
-        getAsync: true,
+        getAsync: false,
         lng: config.language || 'en' //navigator.language || navigator.userLanguagenavigator.language || navigator.userLanguage
       });
     },
@@ -24,6 +24,14 @@ define(['marionette','config','i18n'], function(Marionette, config) {
 
   return {
     getTranslater: function(options) {
+      return translater;
+    },
+    setTranslater: function(options) {
+      i18n.init({
+        resGetPath: this.url,
+        getAsync: false,
+        lng: options.lng
+      });
       return translater;
     },
   };

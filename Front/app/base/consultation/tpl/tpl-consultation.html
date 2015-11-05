@@ -1,13 +1,31 @@
 <div id="contConsult">
-	<%console.log('thisedgqsergezr',topic);%>
-	<h1 id="consultTitle">Terme : <span id="title" class="topicTitle"><%=topic.TTop_Name%></span></h1>
+	<h1 id="consultTitle"><span data-i18n="topic_consult.consult_title">Terme : </span><span id="title" class="topicTitle"><%=topic.TTop_Name%></span></h1>
     <div id="topicContainer">
-    <p class="topicLibelle">Nom : <span class="topicValues" id="TTop_Name"><%=topic.TTop_Name%></span></p>
-    <p class="topicLibelle">Definition : <span class="topicValues" id="TTop_Definition"><%=topic.TTop_Definition%></span></p>
-    <p class="topicLibelle">Est déprécié : <span class="topicValues" id="TTop_IsDeprecated"><%=topic.TTop_IsDeprecated%></span></p>
-    <p class="topicLibelle">Chemin complet : <span class="topicValues" id="TTop_FullPath"><%=topic.TTop_FullPath%></span></p>
-    <p class="topicLibelle">Ordre dans la branche : <span class="topicValues" id="TTop_BranchOrder"><%=topic.TTop_BranchOrder%></span></p>
-    <p class="topicLibelle">Type : <span class="topicValues" id="TTop_Type"><%=topic.TTop_Type%></span></p>
-    <p class="topicLibelle">Date : <span class="topicValues" id="TTop_Date"><%=topic.TTop_Date%></span></p>
-    </div>'
+    <p class="topicLibelle"><span data-i18n="topic_consult.field_name">Nom : </span><span class="topicValues" id="TTop_Name"><%=topic.TTop_Name%></span></p>
+    <p class="topicLibelle"><span data-i18n="topic_consult.field_definition">Definition : </span><span class="topicValues" id="TTop_Definition"><%=topic.TTop_Definition%></span></p>
+    <p class="topicLibelle"><span data-i18n="topic_consult.field_isDeprecated">Est déprécié : </span><span class="topicValues" id="TTop_IsDeprecated"><%=topic.TTop_IsDeprecated%></span></p>
+    <p class="topicLibelle"><span data-i18n="topic_consult.field_fullpath">Chemin complet : </span><span class="topicValues" id="TTop_FullPath"><%=topic.TTop_FullPath%></span></p>
+    <p class="topicLibelle"><span data-i18n="topic_consult.field_branchOrder">Ordre dans la branche : </span><span class="topicValues" id="TTop_BranchOrder"><%=topic.TTop_BranchOrder%></span></p>
+    <p class="topicLibelle"><span data-i18n="topic_consult.field_type">Type : </span><span class="topicValues" id="TTop_Type"><%=topic.TTop_Type%></span></p>
+    <p class="topicLibelle"><span data-i18n="topic_consult.field_date">Date : </span><span class="topicValues" id="TTop_Date"><%=topic.TTop_Date%></span></p>
+    <div class="translateContainer">
+        <%console.log('topic',topic);%>
+        <%console.log('langue',langue);%>
+        <% if(langue != refLangue){
+            var foundLanguage = false;
+            $.each(topic.TTopicLibelle,function(){
+            if(this.TLib_FK_TLan_ID.toLowerCase() == langue.toLowerCase()){
+                foundLanguage = true;
+                %>
+                <p class="topicLibelle"><span data-i18n="topic_consult.field_nameTrans">Nom Traduit : </span><span class="topicValues" id="TLib_Name"><%=this.TLib_Name%></span></p>
+                <p class="topicLibelle"><span data-i18n="topic_consult.field_fullpathTrans">Chemin complet Traduit : </span><span class="topicValues" id="TLib_FullPath"><%=this.TLib_FullPath%></span></p>
+                <%
+            }
+            });
+            if(!foundLanguage){
+                %><span class="info" data-i18n="topic_consult.field_noInfo">La traduction n'est pas définie dans votre langue.</span><%
+            }
+        }%>
+    </div>
+    </div>
 </div>

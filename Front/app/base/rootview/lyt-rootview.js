@@ -1,10 +1,14 @@
 define(['marionette',
   'backbone',
+  'translater',
   'transitionRegion',
   'jquery',
   'jqueryui',
-  '../../base/header/lyt-header'],
-function(Marionette, Backbone, TransitionRegion, jQuery, ui, LytHeader) {
+  '../../base/header/lyt-header',
+  '../../base/tree/lyt-tree',
+  'i18n',
+  'config'],
+function(Marionette, Backbone, Translater, TransitionRegion, jQuery, ui, LytHeader, LytTree,I18n,config) {
   'use strict';
   return Marionette.LayoutView.extend({
     el: 'body',
@@ -16,13 +20,19 @@ function(Marionette, Backbone, TransitionRegion, jQuery, ui, LytHeader) {
       rgMain: 'main',
       rgFooter: 'footer',
     },
+    initialize: function(options){
+      this.options = options;
+      this.translater = Translater.getTranslater();
+    },
+    onRender: function(options){
+      this.$el.i18n();
+    },
     render: function(options) {
-      console.log('options',options);
       Marionette.LayoutView.prototype.render.apply(this, options);
       this.rgHeader.show(new LytHeader());
-      var treevv = new TreeViewView();
-      treevv.$el.appendTo($('#treeViewContainer'));
-      treevv.render();
+      var tree = new LytTree(this.options);
+      tree.render();
+      $('#rgTree').append(tree.el);
     },
   });
 });

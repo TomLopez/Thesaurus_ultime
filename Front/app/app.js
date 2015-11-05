@@ -1,10 +1,10 @@
 
 define(['marionette', 'backbone', 'moment',
   './base/rootView/lyt-rootview', 'router',
-   'controller', 'config'],
+   'controller', 'config', 'translater', 'i18n'],
    function(
     Marionette, Backbone, moment, LytRootview, Router,
-    Controller, config) {
+    Controller, config, Translater) {
 
      var app = {};
      var JST = window.JST = window.JST || {};
@@ -17,13 +17,16 @@ define(['marionette', 'backbone', 'moment',
      app = new Marionette.Application();
 
      app.on('start', function() {
-       app.rootView = new LytRootview();
-       app.rootView.render();
+       /*app.user = new Backbone.Model({
+             user: 'Admin User',
+             language: 'fr'
+           });*/
+       app.translater = Translater.setTranslater({lng:app.user.get('language')});
+       app.rootView = new LytRootview({options : app.user.get('language')});
        app.controller = new Controller({app: app});
        app.router = new Router({controller: app.controller, app: app});
-       app.user = new Backbone.Model({
-             user: 'Admin User',
-           });
+       app.rootView.render();
+       //this.rootView.$el.i18n({lng: app.user.get('language')});
        Backbone.history.start();
      });
 
