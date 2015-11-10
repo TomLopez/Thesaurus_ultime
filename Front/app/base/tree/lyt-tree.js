@@ -13,7 +13,7 @@ define(['marionette',
 
       template: Schtroudel,
       className: 'ns-full-height treeContainer',
-      apiUrl: 'http://localhost:56121/api/thesaurus',
+      apiUrl: 'http://localhost/ThesaurusCore/api/thesaurus',
       language: 'fr',
 
       initialize: function(options){
@@ -56,7 +56,7 @@ define(['marionette',
       source: {
         type: "GET",
         url: _this.apiUrl + "/fastInitForCompleteTree?StartNodeID=0&lng="+this.language+"&deprecated=true",
-        datatype: 'json',
+        datatype: 'jsonp',
       },
       dnd: {
         autoExpandMS: 1000,
@@ -84,15 +84,21 @@ define(['marionette',
          //}
          //node.setExpanded(true);
          //return ["before", "after"];
-         return true;
-       },
-       dragDrop: function (node, data) {
+         if(window.app.user.get('status').toLowerCase() != 'administrateur'){
+          return false;
+        }else{
+          return true;
+        }
+      },
+      dragDrop: function (node, data) {
          /** This function MUST be defined to enable dropping of items on
           *  the tree.
           */
           var thisNode = node;
           var otherNode = data.otherNode;
           var hitmode = data.hitMode;
+          console.log('data.hitmode',data.hitmode);
+          return
          //console.log(data.otherNode);
          //console.log(node);
 
@@ -105,7 +111,7 @@ define(['marionette',
             data: '{ "iMovedTopicId" : "' + otherNode.key + '", "iDestTopicId": "' + thisNode.key + '", "sHitMode": "' + data.hitMode + '" }',
           }).success(function (data) {
             if (data) {
-              confirmDrop(thisNode, otherNode, hitmode);
+              _this.confirmDrop({'thisNode': thisNode, 'otherNode': otherNode, 'hitmode': hitmode});
             } else {
               $.growl.error({ message: "Le terme ne peut être déplacer ici pour des raisons de doublons TTop_Name : " + otherNode.title });
             }
@@ -135,7 +141,7 @@ define(['marionette',
               $.growl.error({ message: "Une erreur est survenu durant le déplacement. Veuillez réessayer plus tard." });
             });
           } else {
-            confirmDrop(thisNode, otherNode, hitmode);
+            _this.confirmDrop({'thisNode': thisNode, 'otherNode': otherNode, 'hitmode': hitmode});
           }
         }
       }
@@ -147,9 +153,14 @@ define(['marionette',
          //$.ui.fancytree.debug("Menu create ", data.$menu);
        },
        beforeOpen: function (event, data) {
-         //$.ui.fancytree.debug("Menu beforeOpen ", data.$menu, data.node);
-       },
-       open: function (event, data) {
+        console.log(window.app)
+        if(window.app.user.get('status').toLowerCase() != 'administrateur'){
+          return false;
+        }else{
+          return true;
+        }
+      },
+      open: function (event, data) {
         $("#unitaireInfo").val(data.node.key);
         data.$menu.find('.Consulter a').attr('href', '#consultation/' + data.node.key);
         data.$menu.find('.Créer a').attr('href', '#creation/' + data.node.key);
@@ -205,7 +216,58 @@ define(['marionette',
 this.setElement(this.$el);
 this.$el.i18n();
 },
+confirmDrop: function(options) {
+  var thisNode, otherNode, hitmode;
+  thisNode = options.thisNode;
+  otherNode = options.otherNode;
+  hitmode = options.hitMode;
+  var info;
+  if (hitmode == 'over') {
+    info = $.i18n.t("growlMessage.growl_topicDndSon", { node1: otherNode.title, node2: thisNode.title });
+  } else {
+    info = $.i18n.t("growlMessage.growl_topicDndBrother", { node1: otherNode.title, node2: thisNode.title });
+  }
+  $('<div></div>').appendTo('body')
+  .html('<div><h6>' + info + '</h6></div>')
+  .dialog({
+    modal: true,
+    title: $.i18n.t('dragNDrop_messages.confirm'),
+    zIndex: 10000,
+    autoOpen: true,
+    width: '300px',
+    resizable: false,
+    buttons: {
+      Yes: function () {
+        $.ajax({
+          type: 'GET',
+          url: config.servUrl + "thesaurus/dropEnding?id_movedNode="+otherNode.key+"&id_destNode="+thisNode.key +"&order="+ hitmode,
+          //datatype: 'json',
+          contentType: "application/json; charset=utf-8",
+          //data: '{ "id_movedNode" : "' + otherNode.key + '", "id_destNode": "' + thisNode.key + '", "order": "' + hitmode + '" }',
+        }).success(function (data) {
+          $.growl.notice({ title: $.i18n.t("growlMessage.growl_title_dnd"), message: $.i18n.t("growlMessage.growl_topicDndSuccess", { topicName: data.TTop_Name }) });
+          if (Backbone.history.fragment.indexOf("modif") == -1 && Backbone.history.fragment.indexOf("suppr") == -1) {
+            isTopicMenu = true;
+            adaptMenu(otherNode.key);
+            $("#unitaireInfo").val(otherNode.key);
+            router.navigate('consultation/' + data.TTop_PK_ID, { trigger: true });
+          }
+        }).error(function () {
+          $.growl.error({ message: $.i18n.t("growlMessage.growl_topicDndErrorUnknown") });
+        });
+        thisNode.setExpanded(true).done(function () { otherNode.moveTo(thisNode, hitmode); });
 
-
+        $(this).dialog("close");
+      },
+      No: function () {
+        $.growl.warning({ message: $.i18n.t("growlMessage.growl_topicDndCancel") });
+        $(this).dialog("close");
+      }
+    },
+    close: function (event, ui) {
+      $(this).remove();
+    }
+  });
+},
 });
 });

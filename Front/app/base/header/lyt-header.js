@@ -29,7 +29,7 @@ function(Marionette, config) {
     },
 
     onShow: function() {
-
+      $('#lblUser').text(this.model.attributes.user)
     },
   });
 });

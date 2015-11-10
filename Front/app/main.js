@@ -34,6 +34,7 @@ require.config({
     sha1: '../bower_components/sha1/bin/sha1',
     i18n: '../bower_components/i18n/i18next',
     moment: '../bower_components/moment/min/moment.min',
+    'jsrsasign': '../bower_components/jsrsasign/jsrsasign-latest-all-min',
     treeView: './vendors/Treeview_navbar_module',
     fancytree: './vendors/Fancytree/jquery.fancytree-all',
     fancytree_menu: './vendors/Fancytree/src/jquery.fancytree.menu',
@@ -95,10 +96,10 @@ require.config({
     fancytree_menu: {
       deps: ['fancytree'],
     },
-     fancytree_filter: {
+    fancytree_filter: {
       deps: ['fancytree'],
     },
-     fancytree_dnd: {
+    fancytree_dnd: {
       deps: ['fancytree'],
     },
     i18n: {
@@ -106,29 +107,65 @@ require.config({
       exports: '$',
     },
     listOfNestedModel: {
-    deps: [
-            'backbone',
-             'backbone_forms'
-            ]
+      deps: [
+      'backbone',
+      'backbone_forms'
+      ]
     },
   },
   packages:[
-    {
-        name: 'listOfNestedModel',
-        location: '../bower_components/nsBackbonesTools/ListOfNestedModel',
-        main: 'listOfNestedModel'
-    },
+  {
+    name: 'listOfNestedModel',
+    location: '../bower_components/nsBackbonesTools/ListOfNestedModel',
+    main: 'listOfNestedModel'
+  },
   ]
 });
 
-require(['app', 'templates','translater'],
-function(app, templates, Translater) {
-  app.user = new Backbone.Model({
-    user: 'Admin User',
-    language: 'fr'
+require(['app', 'templates','translater','config','jsrsasign'],
+  function(app, templates, Translater, config) {
+    var x = document.cookie;
+  /*if(x.indexOf('ecoReleve-Core') != -1){
+    console.log('document.cookie',document.cookie);
+    var CookiePart = x.split(';');
+    var token;
+    $.each(CookiePart, function(index,value){
+      console.log('arguments',arguments)
+      if(value.indexOf('ecoReleve-Core') != -1){
+        token = value.split('=')[1];
+        return;
+      }
+    });
+    var decodedHEad = KJUR.jws.JWS.readSafeJSONString(b64utoutf8(token.split(".")[0]));
+    var payloadObj = KJUR.jws.JWS.readSafeJSONString(b64utoutf8(token.split(".")[1]));
+    console.log('decodedHEad',decodedHEad);
+    console.log('payloadObj',payloadObj);*/
+    var userDatas;
+    $.ajax({
+      async: false,
+      url: config.servUrl + 'Security/decode'
+    }).done(function(data){
+      userDatas = data;
+    }).error(function(){
+      alert("une erreur est survenue lors de l'accès au serveur");
+    });
+    console.log('userDatas', userDatas);
+    if(userDatas != null && userDatas !== undefined){
+      if(userDatas.Name !== undefined && userDatas.Name != ""){
+        app.user = new Backbone.Model({
+          user: userDatas.Name,
+          language: userDatas.UserLanguage,
+          //status: userDatas.RoleInThes,
+        //status: 'Admin'
+        status: 'SuperUser'
+        //status: 'User'
+      });
+        this.translater = Translater.setTranslater(userDatas.UserLanguage.toLowerCase());
+        setTimeout(function(){ app.start(); }, 0);
+      }else{
+        window.location=config.portalUrl;
+      }
+    }else{
+      window.location=config.portalUrl;
+    }
   });
-  this.translater = Translater.setTranslater(app.user.get('language'));
-  setTimeout(function(){ app.start(); }, 0);
-
-//  this.translater = Translater.getTranslater();
-});

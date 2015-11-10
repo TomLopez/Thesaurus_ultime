@@ -54,7 +54,6 @@ function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneFo
       }).render();
       this.form = form;
       $('#topicContainer').append(form.el);
-      console.log('this.model.user.get(language)',this.model);
       this.$el.i18n();
     },
     validation:function() {

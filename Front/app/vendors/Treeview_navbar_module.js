@@ -1,4 +1,4 @@
-﻿var TreeViewView = Backbone.View.extend({
+﻿/*var TreeViewView = Backbone.View.extend({
 	tagName: 'div',
 	className: 'treeContainer',
 	apiUrl: 'http://localhost:56121/api/thesaurus',
@@ -56,7 +56,7 @@
 				dragStart: function (node, data) {
 				 /** This function MUST be defined to enable dragging for the tree.
 					*  Return false to cancel dragging of node.
-					*/
+					*//*
 					return true;
 				},
 				dragEnter: function (node, data) {
@@ -66,7 +66,7 @@
 					*  Return 'over', 'before, or 'after' to force a hitMode.
 					*  Return ['before', 'after'] to restrict available hitModes.
 					*  Any other return value will calc the hitMode from the cursor position.
-					*/
+					*//*
 				 // Prevent dropping a parent below another parent (only sort
 				 // nodes under the same parent)
 				 //if (node.parent !== data.otherNode.parent) {
@@ -79,7 +79,7 @@
 				dragDrop: function (node, data) {
 				 /** This function MUST be defined to enable dropping of items on
 					*  the tree.
-					*/
+					*//*
 					var thisNode = node;
 					var otherNode = data.otherNode;
 					var hitmode = data.hitMode;
@@ -136,7 +136,7 @@
 					var node = $(this).fancytree("getTree").getNodeByKey("" + Backbone.history.getFragment().split("/")[1]);
 				 //node.makeVisible({scrollIntoView: true});
 				 fncConsultation();
-				}*/
+				}*//*
 			},
 			menu: {
 				selector: this.$el.find('ul')[0],
@@ -169,7 +169,7 @@
 					isTopicMenu = true;
 					adaptMenu(node.node.key);
 					router.navigate('consultation/' + node.node.key, { trigger: true });
-				}*/
+				}*//*
 			},
 			//Evenement en fin d'expand on applique un filtre si celui ci existe
 			expand: function () {
@@ -258,7 +258,7 @@ checkboxUndeprecateMode.change(function () {
 		url: readUrl + "/" + tabStrWebservice['init'],
 		datatype: 'json',
 		contentType: "application/json; charset=utf-8",
-		data: '{ "StartNodeID":0,"lng" : "' + language + '", "deprecated": "'+deprec+'"}',*/
+		data: '{ "StartNodeID":0,"lng" : "' + language + '", "deprecated": "'+deprec+'"}',*//*
 	});
 });
 buttonReset.click(function (e) {
@@ -390,3 +390,4 @@ function resetResearch(){
 	});
 	return;
 }
+*/

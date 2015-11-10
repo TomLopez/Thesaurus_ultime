@@ -80,8 +80,8 @@ define(['marionette',
       this.rgMain.show(new LytLanguageManaging({key: options}));
     },
     test: function(options){
-      this.rgMain.show(new LytTree({options: 'fr'}));
-
+      document.cookie ='ecoReleve-Core=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      console.log('document.cookieclear',document.cookie);
     }
   });
 });
