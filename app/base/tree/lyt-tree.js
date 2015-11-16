@@ -13,7 +13,7 @@ define(['marionette',
 
       template: Schtroudel,
       className: 'ns-full-height treeContainer',
-      apiUrl: 'http://localhost/ThesaurusCore/api/thesaurus',
+      apiUrl: 'http://localhost:56121/api/thesaurus',
       language: 'fr',
 
       initialize: function(options){

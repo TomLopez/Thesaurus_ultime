@@ -154,10 +154,11 @@ require(['app', 'templates','translater','config','jsrsasign'],
       if(userDatas.Name !== undefined && userDatas.Name != ""){
         app.user = new Backbone.Model({
           user: userDatas.Name,
-          language: userDatas.UserLanguage,
+          //language: userDatas.UserLanguage,
+          language: "en",
           //status: userDatas.RoleInThes,
-        //status: 'Admin'
-        status: 'SuperUser'
+        status: 'Admin'
+        //status: 'SuperUser'
         //status: 'User'
       });
         this.translater = Translater.setTranslater(userDatas.UserLanguage.toLowerCase());
