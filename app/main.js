@@ -23,6 +23,7 @@ require.config({
     jqueryui: '../bower_components/jqueryui/jquery-ui.min',
     underscore: '../bower_components/underscore/underscore',
     backbone: '../bower_components/backbone/backbone',
+    'backbone-forms': '../bower_components/backbone-forms/distribution.amd/backbone-forms',
     backbone_forms: '../bower_components/backbone-forms/distribution.amd/backbone-forms.min',
     'backbone.list': '../bower_components/backbone-forms/distribution.amd/editors/list',
     marionette: '../bower_components/marionette/lib/core/backbone.marionette',
@@ -34,7 +35,6 @@ require.config({
     sha1: '../bower_components/sha1/bin/sha1',
     i18n: '../bower_components/i18n/i18next',
     moment: '../bower_components/moment/min/moment.min',
-    'jsrsasign': '../bower_components/jsrsasign/jsrsasign-latest-all-min',
     treeView: './vendors/Treeview_navbar_module',
     fancytree: './vendors/Fancytree/jquery.fancytree-all',
     fancytree_menu: './vendors/Fancytree/src/jquery.fancytree.menu',
@@ -122,24 +122,9 @@ require.config({
   ]
 });
 
-require(['app', 'templates','translater','config','jsrsasign'],
+require(['app', 'templates','translater','config'],
   function(app, templates, Translater, config) {
     var x = document.cookie;
-  /*if(x.indexOf('ecoReleve-Core') != -1){
-    console.log('document.cookie',document.cookie);
-    var CookiePart = x.split(';');
-    var token;
-    $.each(CookiePart, function(index,value){
-      console.log('arguments',arguments)
-      if(value.indexOf('ecoReleve-Core') != -1){
-        token = value.split('=')[1];
-        return;
-      }
-    });
-    var decodedHEad = KJUR.jws.JWS.readSafeJSONString(b64utoutf8(token.split(".")[0]));
-    var payloadObj = KJUR.jws.JWS.readSafeJSONString(b64utoutf8(token.split(".")[1]));
-    console.log('decodedHEad',decodedHEad);
-    console.log('payloadObj',payloadObj);*/
     var userDatas;
     $.ajax({
       async: false,
