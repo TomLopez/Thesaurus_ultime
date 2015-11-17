@@ -54,9 +54,9 @@ define(['marionette',
 
       //defini la source pour les elts parents
       source: {
-        type: "GET",
+        type: 'GET',
         url: _this.apiUrl + "/fastInitForCompleteTree?StartNodeID=0&lng="+this.language+"&deprecated=true",
-        datatype: 'jsonp',
+        //dataType:'JSONP'
       },
       dnd: {
         autoExpandMS: 1000,

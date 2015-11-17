@@ -38,46 +38,66 @@ define(['marionette',
     },
     modification: function(options) {
       console.log('arguments',options);
-      this.rgMain.show(new LytModification({key: options}));
+      if(this.options.app.user.get('status') == 'Administrateur' && config.isCore){
+        this.rgMain.show(new LytModification({key: options}));
+      }else{
+        window.location = '#home';
+      }
     },
     creation: function(options) {
       console.log('argumentscreation',options);
-      this.rgMain.show(new LytCreation({key: options}));
+      if(this.options.app.user.get('status') == 'Administrateur' && config.isCore){
+        this.rgMain.show(new LytCreation({key: options}));
+      }else{
+        window.location = '#home';
+      }
     },
     suppression: function(options) {
-      if(options){
-        var theTree = $('#treeView').fancytree('getTree');
-        var nodeToDelete = theTree.getNodeByKey(options);
-      swal({
-        title: 'Are you sure?',
-        text: 'You will not be able to recover the topic : ' + nodeToDelete.title + '!',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: 'Yes, delete it!',
-        closeOnConfirm: false
-      },
-      function() {
-        $.ajax({
-          type: 'DELETE',
-          url: config.servUrl + 'topic/' + options
-        }).error(function() {
-          swal('TroubleShooting', 'An error occured during topic delete.');
-        }).done(function() {
-          nodeToDelete.remove();
-          swal('Deleted!', 'Your topic has been deleted.', 'success');
-        });
+      if(this.options.app.user.get('status') == 'Administrateur' && config.isCore){
+        if(options){
+          var theTree = $('#treeView').fancytree('getTree');
+          var nodeToDelete = theTree.getNodeByKey(options);
+          swal({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover the topic : ' + nodeToDelete.title + '!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes, delete it!',
+            closeOnConfirm: false
+          },
+          function() {
+            $.ajax({
+              type: 'DELETE',
+              url: config.servUrl + 'topic/' + options
+            }).error(function() {
+              swal('TroubleShooting', 'An error occured during topic delete.');
+            }).done(function() {
+              nodeToDelete.remove();
+              swal('Deleted!', 'Your topic has been deleted.', 'success');
+            });
 
-      });
+          });
+        }
+      }else{
+        window.location = '#home';
       }
     },
     language: function(options){
       console.log('langage',options);
-      this.rgMain.show(new LytLanguage({key: options}));
+      if(this.options.app.user.get('status') == 'Administrateur' && config.isCore){
+        this.rgMain.show(new LytLanguage({key: options}));
+      }else{
+        window.location = '#home';
+      }
     },
     languageManage: function(options){
       console.log('langage',options);
-      this.rgMain.show(new LytLanguageManaging({key: options}));
+      if(this.options.app.user.get('status') == 'Administrateur' && config.isCore){
+        this.rgMain.show(new LytLanguageManaging({key: options}));
+      }else{
+        window.location = '#home';
+      }
     },
     test: function(options){
       document.cookie ='ecoReleve-Core=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';

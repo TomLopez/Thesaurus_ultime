@@ -141,32 +141,39 @@ require(['app', 'templates','translater','config','jsrsasign'],
     console.log('decodedHEad',decodedHEad);
     console.log('payloadObj',payloadObj);*/
     var userDatas;
-    $.ajax({
-      async: false,
+    /*$.ajax({
+      type: 'GET',
+      dataType: 'jsonp',
+      async:false,
       url: config.servUrl + 'Security/decode'
     }).done(function(data){
-      userDatas = data;
-    }).error(function(){
-      alert("une erreur est survenue lors de l'accès au serveur");
-    });
-    console.log('userDatas', userDatas);
-    if(userDatas != null && userDatas !== undefined){
-      if(userDatas.Name !== undefined && userDatas.Name != ""){
+      console.log(data);
+      userDatas = data;*/
+      //if(userDatas != null && userDatas !== undefined){
+      //if(userDatas.Name !== undefined && userDatas.Name != ""){
         app.user = new Backbone.Model({
-          user: userDatas.Name,
+          //user: userDatas.Name,
+          user: 'Schtroudel Meister',
           //language: userDatas.UserLanguage,
           language: "en",
           //status: userDatas.RoleInThes,
-        status: 'Admin'
-        //status: 'SuperUser'
+        //status: 'Administrateur'
+        status: 'SuperUser'
         //status: 'User'
       });
-        this.translater = Translater.setTranslater(userDatas.UserLanguage.toLowerCase());
+        //this.translater = Translater.setTranslater(userDatas.UserLanguage.toLowerCase());
+        this.translater = Translater.setTranslater('en');
         setTimeout(function(){ app.start(); }, 0);
-      }else{
-        window.location=config.portalUrl;
-      }
-    }else{
-      window.location=config.portalUrl;
+      /*}else{
+        //window.location=config.portalUrl;
+      }*/
+    /*}else{
+      //window.location=config.portalUrl;
     }
+    }).error(function(e){
+      console.log('infos', arguments);
+      alert("une erreur est survenue lors de l'accès au serveur");
+    });*/
+    //console.log('userDatas', userDatas);
+
   });
