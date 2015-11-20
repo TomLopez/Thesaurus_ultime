@@ -17,14 +17,21 @@
             if(this.TLib_FK_TLan_ID.toLowerCase() == langue.toLowerCase()){
                 foundLanguage = true;
                 %>
-                <p class="topicLibelle"><span data-i18n="topic_consult.field_nameTrans">Nom Traduit : </span><span class="topicValues" id="TLib_Name"><%=this.TLib_Name%></span></p>
-                <p class="topicLibelle"><span data-i18n="topic_consult.field_fullpathTrans">Chemin complet Traduit : </span><span class="topicValues" id="TLib_FullPath"><%=this.TLib_FullPath%></span></p>
+                <p class="topicLibelle"><span data-i18n="topic_consult.field_nameTrans">Nom Traduit : </span><span> (<%=langue.toUpperCase()%>): </span><span class="topicValues" id="TLib_Name"><%=this.TLib_Name%></span></p>
+                <p class="topicLibelle"><span data-i18n="topic_consult.field_fullpathTrans">Chemin complet Traduit : </span><span> (<%=langue.toUpperCase()%>): </span><span class="topicValues" id="TLib_FullPath"><%=this.TLib_FullPath%></span></p>
                 <%
             }
             });
             if(!foundLanguage){
-                %><span class="info" data-i18n="topic_consult.field_noInfo">La traduction n'est pas définie dans votre langue.</span><%
+            $.each(topic.TTopicLibelle,function(){
+                if(this.TLib_FK_TLan_ID.toLowerCase() == 'en'){
+%>
+                <p class="topicLibelle"><span data-i18n="topic_consult.field_nameTrans">Nom Traduit </span><span> (EN): </span><span class="topicValues" id="TLib_Name"><%=this.TLib_Name%></span></p>
+                <p class="topicLibelle"><span data-i18n="topic_consult.field_fullpathTrans">Chemin complet Traduit</span><span> (EN): </span><span class="topicValues" id="TLib_FullPath"><%=this.TLib_FullPath%></span></p>
+                <%
             }
+            });
+        }
         }%>
     </div>
     </div>

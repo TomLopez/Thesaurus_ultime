@@ -15,6 +15,12 @@ define(['marionette',
       className: 'ns-full-height treeContainer',
       apiUrl: 'http://localhost:56121/api/thesaurus',
       language: 'fr',
+      events: {
+        'change #undeprecateMode': 'deprecatedMode',
+        'change #hideMode': 'uselessMode',
+        'keyup input[name=treeview-search]': 'research',
+        'click #reinit': 'resetResearch'
+      },
 
       initialize: function(options){
         this.options = options;
@@ -47,7 +53,7 @@ define(['marionette',
         var node = data.node;
         if (node.data.deprecated) {
           var $span = $(node.span);
-          $span.find("> span.fancytree-title").html(node.title + ' <img src="./Scripts/images/pointeur-souris.png" alt="Terme déprécié, non selectionnable"/>');
+          $span.find("> span.fancytree-title").html(node.title + ' <img src="./app/styles/img/pointeur-souris.png" alt="Terme déprécié, non selectionnable"/>');
         }
 
       },
@@ -85,6 +91,7 @@ define(['marionette',
          //node.setExpanded(true);
          //return ["before", "after"];
          if(window.app.user.get('status').toLowerCase() != 'administrateur'){
+          alert();
           return false;
         }else{
           return true;
@@ -97,21 +104,18 @@ define(['marionette',
           var thisNode = node;
           var otherNode = data.otherNode;
           var hitmode = data.hitMode;
-          console.log('data.hitmode',data.hitmode);
-          return
-         //console.log(data.otherNode);
-         //console.log(node);
+          console.log('args', arguments, hitmode)
 
          if (data.otherNode.parent.key != node.parent.key) {
           $.ajax({
-            type: 'POST',
-            url: _this.apiUrl + "/dropDownConstraint",
+            type: 'GET',
+            url: _this.apiUrl + '/dropDownConstraint?iMovedTopicId=' + otherNode.key + '&iDestTopicId=' + thisNode.key + '&sHitMode='  + hitmode,
             datatype: 'json',
             contentType: "application/json; charset=utf-8",
-            data: '{ "iMovedTopicId" : "' + otherNode.key + '", "iDestTopicId": "' + thisNode.key + '", "sHitMode": "' + data.hitMode + '" }',
+            //data: '{ "iMovedTopicId" : "' + otherNode.key + '", "iDestTopicId": "' + thisNode.key + '", "sHitMode": "' + hitmode + '" }',
           }).success(function (data) {
             if (data) {
-              _this.confirmDrop({'thisNode': thisNode, 'otherNode': otherNode, 'hitmode': hitmode});
+              _this.confirmDrop({'thisNode': thisNode, 'otherNode': otherNode, 'hitMode': hitmode});
             } else {
               $.growl.error({ message: "Le terme ne peut être déplacer ici pour des raisons de doublons TTop_Name : " + otherNode.title });
             }
@@ -120,11 +124,11 @@ define(['marionette',
           if (hitmode != "over") {
             thisNode.setExpanded(true).done(function () { otherNode.moveTo(thisNode, hitmode) });
             $.ajax({
-              type: 'POST',
-              url: apiUrl + "/dropEnding",
+              type: 'GET',
+              url: apiUrl + '/dropEnding?iMovedTopicId=' + otherNode.key + '&iDestTopicId=' + thisNode.key + '&sHitMode='  + hitmode,
               datatype: 'json',
               contentType: "application/json; charset=utf-8",
-              data: '{ "id_movedNode" : "' + otherNode.key + '", "id_destNode": "' + thisNode.key + '", "order": "' + hitmode + '" }',
+              //data: '{ "id_movedNode" : "' + otherNode.key + '", "id_destNode": "' + thisNode.key + '", "order": "' + hitmode + '" }',
             }).success(function (data) {
               $.growl.notice({ title: "Déplacement", message: "déplacement du terme " + data.TTop_Name + " réussi." });
               if (Backbone.history.fragment.indexOf("modif") == -1 && Backbone.history.fragment.indexOf("suppr") == -1) {
@@ -141,7 +145,7 @@ define(['marionette',
               $.growl.error({ message: "Une erreur est survenu durant le déplacement. Veuillez réessayer plus tard." });
             });
           } else {
-            _this.confirmDrop({'thisNode': thisNode, 'otherNode': otherNode, 'hitmode': hitmode});
+            _this.confirmDrop({'thisNode': thisNode, 'otherNode': otherNode, 'hitMode': hitmode});
           }
         }
       }
@@ -269,5 +273,62 @@ confirmDrop: function(options) {
     }
   });
 },
+uselessMode:function(options){
+  var tree = this.tree.fancytree('getTree');
+  tree.options.filter.mode = $('#hideMode').is(":checked") ? "hide" : "dimm";
+  tree.clearFilter();
+  $('input[name=treeview-search]').keyup();
+  tree.filterNodes($("input[name=treeview-search]").val());
+  if (!($('input[name=treeview-search]').val() != "" && $('input[name=treeview-search]').val().length > 3)) {
+    tree.clearFilter();
+  }
+},
+research: function(options){
+  console.log('research',options)
+  var treeHtml = $("#treeView");
+  var fancytree = this.tree.fancytree('getTree');
+  //Si le nombre d'élément est < a 100 on oblige l'utilisation d'au moins trois caractères pour des raisons de performance
+  if (fancytree.count() < 100 || $(options.currentTarget).val().length >= 3) {
+    $('#reinit').attr("disabled", false);
+    treeHtml.find('ul.fancytree-container li').css("padding", "1px 0 0 0");
+    treeHtml.fancytree("getRootNode").visit(function (node) {
+      if (node.span) {
+        var className = node.span.className;
+        if (className.indexOf('fancytree-hide') != -1) {
+          node.setExpanded(false);
+        }
+      } else {
+        node.setExpanded(false);
+      }
+    });
+    var n,
+    match = $(options.currentTarget).val();
+
+    n = fancytree.filterNodes(match, false);
+    while (treeHtml.find('.fancytree-submatch:not(.fancytree-expanded)').find('.fancytree-expander').length) {
+      treeHtml.find('.fancytree-submatch:not(.fancytree-expanded)').find('.fancytree-expander').click();
+    }
+    if (treeHtml.find('.fancytree-match').length < 3 && treeHtml.find('.fancytree-match').find('.fancytree-match').length)
+      treeHtml.find('.fancytree-match').find('.fancytree-expander').click()
+    treeHtml.find('ul.fancytree-container li').css("padding", "0px 0 0 0");
+  }
+  if ($(options.currentTarget).val().length == 0) {
+    fancytree.clearFilter();
+    treeHtml.fancytree("getRootNode").visit(function (node) {
+      node.setExpanded(false);
+    });
+    return;
+  }
+},
+resetResearch: function(options){
+  var tree = this.tree.fancytree('getTree');
+  var rootNode = this.tree.fancytree("getRootNode");
+  tree.clearFilter();
+  $('input[name=treeview-search]').val("");
+  rootNode.visit(function (node) {
+    node.setExpanded(false);
+  });
+  return;
+}
 });
 });

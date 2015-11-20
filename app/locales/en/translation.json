@@ -2,7 +2,7 @@
 	"tree":{
 		"checkbox_useless_node":"Useless node",
 		"search_placeholder":"Search here...",
-		"search_button":"Search",
+		"search_button":"Reset research",
 		"checkbox_deprecated_node":"Depreacted node"
 	},
 	"contextualMenu_Label":{
@@ -34,7 +34,8 @@
 		"field_addProperty_button": "New property",
 		"field_isDeprecated_yesValue": "Yes",
 		"field_isDeprecated_noValue": "No",
-		"zone_libelle": "Translation"
+		"zone_libelle": "Translation",
+		"zone_attribute": "Attributes"
 	},
 	"topicLibelle_field":
 	{
@@ -45,12 +46,28 @@
 		"lib_FKTopic":"Topic's key",
 		"lib_PKLibelle":"Libelle's key"
 	},
+	"topicAttribute_field":
+	{
+		"field_TAtt_PK_ID":"Attribute key :",
+		"field_TAtt_FK_TTop_ID":"Topic key :",
+		"field_TAtt_FieldName":"Attribute name :",
+		"field_TAtt_FieldValue":"Attribute value :",
+		"field_TAtt_DateCreation":"Creation date :",
+		"field_TAtt_Type":"Attribute type :",
+		"field_TTopicFile":"Attachment :"
+	},
+	"topicFile_field":
+	{
+		"field_TTFi_FK_Att_PKID":"File key :",
+		"field_TTFi_Blob":"File :",
+		"field_TTFi_Extension":"Extension type :"
+	},
 	"topic_consult": {
 		"consult_title": "Topic : ",
 		"field_name": "Name :",
 		"field_nameFr": "French Name :",
 		"field_nameEn": "English Name :",
-		"field_nameTrans": "Translated Name :",
+		"field_nameTrans": "Translated Name",
 		"field_definitionFr": "French definition :",
 		"field_definitionEn": "English definition :",
 		"field_definition": "Definition :",
@@ -58,7 +75,7 @@
 		"field_date": "Date :",
 		"field_fullpath": "Fullpath :",
 		"field_fullpathEn": "English Fullpath :",
-		"field_fullpathTrans": "Translated Fullpath :",
+		"field_fullpathTrans": "Translated Fullpath",
 		"field_parentId": "Parent's ID :",
 		"field_branchOrder": "Order in branch :",
 		"field_isDeprecated": "Is deprecated :",

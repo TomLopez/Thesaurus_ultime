@@ -1,39 +1,93 @@
 {
-	"tiles" :{
-		"input" : "tarace"
-
-	},
 	"tree":{
-		"checkbox_useless_node":"test_dev"
+		"checkbox_useless_node":"Noeuds inutiles",
+		"search_placeholder":"Recherche",
+		"search_button":"Rechercher",
+		"checkbox_deprecated_node":"Noeuds dépréciés"
+	},
+	"contextualMenu_Label":{
+		"creerEnf":"Créer enfant",
+		"consulter":"Consulter",
+		"modifier":"Modifier",
+		"supprimer":"Supprimer"
+	},
+	"menu_item": {
+		"item_search": "Rechercher",
+		"item_createh": "Créer",
+		"item_modif": "Modifier",
+		"item_delete": "Supprimer"
 	},
 	"topic_field": {
-		"field_name": "tarace",
-		"field_nameFr": "tarace* :",
-		"field_nameEn": "tarace* :",
-		"field_definitionFr": "tarace",
-		"field_definitionEn": "tarace",
-		"field_type": "tarace",
-		"field_date": "tarace",
-		"field_fullpath": "tarace",
-		"field_fullpathEn": "tarace",
-		"field_parentId": "taraceD :",
-		"field_branchOrder": "taraceh :",
-		"field_isDeprecated": "tarace",
-		"field_addProperty_label": "tarace",
-		"field_addProperty_button": "tarace",
-		"field_isDeprecated_yesValue": "tarace",
-		"field_isDeprecated_noValue": "tarace",
-		"zone_libelle": "tarace"
+		"field_name": "Nom* :",
+		"field_nameFr": "Nom Français* :",
+		"field_nameEn": "Nom Anglais* :",
+		"field_definitionFr": "Definition en français :",
+		"field_definitionEn": "Definition en anglais :",
+		"field_type": "Type :",
+		"field_date": "Date :",
+		"field_fullpath": "Chemin complet :",
+		"field_fullpathEn": "Chemin complet anglais :",
+		"field_parentId": "ID du parent :",
+		"field_branchOrder": "Ordre dans la branche :",
+		"field_isDeprecated": "Est déprécié :",
+		"field_addProperty_label": "Ajouter une propriété :",
+		"field_addProperty_button": "Nouvelle propriété",
+		"field_isDeprecated_yesValue": "Oui",
+		"field_isDeprecated_noValue": "Non",
+		"zone_libelle": "Traduction",
+		"zone_attribute": "Attributs"
 	},
 	"topicLibelle_field":
 	{
-		"lib_name":"Translated name",
-		"lib_fullPath":"Translated fullpath",
-		"lib_Definition":"Translated definition",
-		"lib_FKLangue":"Lnguage",
-		"lib_FKTopic":"Topic's key",
-		"lib_PKLibelle":"Libelle's key"
+		"lib_name":"Nom traduit",
+		"lib_fullPath":"Chemin complet traduit",
+		"lib_Definition":"Définition traduite",
+		"lib_FKLangue":"Langue",
+		"lib_FKTopic":"Clef du topic",
+		"lib_PKLibelle":"Clef du libelle"
+	},
+	"topicAttribute_field":
+	{
+		"field_TAtt_PK_ID":"Clef attribut :",
+		"field_TAtt_FK_TTop_ID":"Clef du topic :",
+		"field_TAtt_FieldName":"Nom de l 'attribut :",
+		"field_TAtt_FieldValue":"Valeur de l'attribut :",
+		"field_TAtt_DateCreation":"Date de création :",
+		"field_TAtt_Type":"Type d'attribut :",
+		"field_TTopicFile":"Fichier joint :"
+	},
+	" ":
+	{
+		"field_TTFi_FK_Att_PKID":"Clef du fichier :",
+		"field_TTFi_Blob":"fichier :",
+		"field_TTFi_Extension":"type d'extension :"
+	},
+	"topic_consult": {
+		"consult_title": "Terme : ",
+		"field_name": "Nom :",
+		"field_nameFr": "Nom Français :",
+		"field_nameEn": "Nom Anglais :",
+		"field_nameTrans": "Nom Traduit",
+		"field_definitionFr": "Definition en français :",
+		"field_definitionEn": "Definition en anglais :",
+		"field_definition": "Definition :",
+		"field_type": "Type :",
+		"field_date": "Date :",
+		"field_fullpath": "Chemin complet :",
+		"field_fullpathEn": "Chemin complet anglais :",
+		"field_fullpathTrans": "Chemin complet traduit",
+		"field_parentId": "ID du parent :",
+		"field_branchOrder": "Ordre dans la branche :",
+		"field_isDeprecated": "Est déprécié :",
+		"field_addProperty_label": "Ajouter une propriété :",
+		"field_addProperty_button": "Nouvelle propriété",
+		"field_isDeprecated_yesValue": "Oui",
+		"field_isDeprecated_noValue": "Non",
+		"field_noInfo": "La traduction n'est pas définie dans votre langue."
+	},
+	"language_edit": {
+		"field_TLan_PK_Name": "ID de la langue (ex \"fr\",\"en\")* :",
+		"field_label": "Label de la langue* :",
+		"field_description": "Description de la langue :"
 	}
-
-
 }

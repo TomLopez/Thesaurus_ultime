@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Exo+2:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
 @import "../../bower_components/reneco-fonts/style.css";
 @import '../../bower_components/sweetalert/lib/sweet-alert.css';
-@import '../vendors/Fancytree/skin-win7/ui.fancytree.min.css';
+@import '../vendors/Fancytree/skin-win7/ui.fancytree.css';
 /*==========  Bower Style Dependancies  ==========*/
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
@@ -10548,6 +10548,7 @@ header #header-loader svg rect {
   padding-left: 25px;
 }
 #contConsult .topicLibelle {
+  margin-left: 15px;
   font-size: 18px;
   font-weight: bold;
 }
@@ -10562,6 +10563,9 @@ header #header-loader svg rect {
 #contModif .buttonContainer {
   margin-top: 10px;
   text-align: center;
+}
+#contModif .btn-success {
+  margin-right: 100px;
 }
 #contCreat {
   background: white;
@@ -10748,6 +10752,130 @@ header #header-loader svg rect {
 }
 .tile-asbestos {
   background-color: #7f8c8d;
+}
+fieldset {
+  border: 1px solid #e5e5e5;
+  padding: 15px;
+  margin-top: 10px;
+  width: 100%;
+}
+fieldset > div {
+  margin-bottom: 10px;
+}
+legend {
+  padding: 0px 10px;
+  margin: 10px 0px;
+  border: none;
+}
+legend.inherit {
+  width: auto;
+  float: left;
+}
+label {
+  margin: 0px;
+  font-weight: 300;
+}
+textarea.form-control {
+  height: 34px;
+  width: 80% !important;
+}
+textarea.form-control:disabled {
+  resize: none;
+}
+input[type=number] {
+  width: 80%;
+  margin-left: 7%;
+}
+input,
+select,
+textarea {
+  font-weight: 600;
+}
+.error select,
+.error input,
+.error textarea {
+  border-left: 5px solid #d9534f;
+}
+.form-control:disabled {
+  border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
+  padding-left: 0px;
+}
+select:disabled {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+}
+.form-control[disabled],
+fieldset[disabled] .form-control {
+  cursor: auto;
+}
+.nested-model ul fieldset {
+  padding: 0px;
+  margin: 0px;
+  border: none;
+}
+.nested-model ul fieldset > div {
+  margin-bottom: 0px;
+}
+.nested-model .form-control {
+  height: auto;
+}
+.input-group .form-control {
+  z-index: inherit;
+}
+.form-control[type="checkbox"] {
+  box-shadow: none;
+}
+/* .nav-tabs > li > a{
+	background-color: #eeeeee;
+	border-color: #eeeeee #eeeeee #dddddd;
+}
+
+.tab-pane{
+	border: 1px solid #dddddd;
+	padding: 15px;
+	border-radius: 0 0 4px 4px;
+	border-top: 0px;
+}
+*/
+.nav-tabs li a {
+  cursor: pointer;
+  color: #3A3939;
+  background: transparent;
+  border: 0px;
+  border-bottom: 2px solid #ddd;
+}
+.nav-tabs li a:hover,
+.nav-tabs li a:visited {
+  cursor: pointer;
+  color: #3A3939;
+  background: transparent;
+  border: 0px;
+  border-bottom: 2px solid #ddd;
+}
+.nav-tabs li.active a,
+.nav-tabs li.activeTab a {
+  cursor: pointer;
+  border: 0px;
+  border-bottom: 2px solid #3A3939;
+}
+.nav-tabs li.active a:hover,
+.nav-tabs li.activeTab a:hover,
+.nav-tabs li.active a:focus,
+.nav-tabs li.activeTab a:focus {
+  cursor: pointer;
+  border: 0px;
+  border-bottom: 2px solid #3A3939;
+  background: transparent;
+}
+.btn-group-sm > .btn {
+  margin-right: 150px;
+}
+.btn .btn-sm .btn-success .list-add .pull-right {
+  margin-right: 100px;
 }
 /*==========  SweetAlert  ==========*/
 /*==========  treeview  ==========*/

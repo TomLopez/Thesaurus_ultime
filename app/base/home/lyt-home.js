@@ -32,7 +32,7 @@ function(Marionette,Backbone) {
 		},
 
 		onShow: function(options) {
-			if(this.model.attributes.status.toLowerCase() != 'Administrateur'){
+			if(this.model.attributes.status.toLowerCase() != 'administrateur'){
 				$('#divAccueil').find('.accButton').each(function(){
 					if($(this).attr('id') != 'consultation'){
 						$(this).remove();

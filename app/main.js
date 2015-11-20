@@ -15,6 +15,8 @@ require.config({
     modTopic: './models/mod-topic',
     modLanguage: './models/mod-language',
     modTopicLibelle: './models/mod-topicLibelle',
+    modTopicFile: './models/mod-topicFile',
+    modAttribute: './models/mod-topicAttribute',
     transitionRegion: './base/transition-region/transition-region',
     translater: 'translater',
     /*==========  Bower  ==========*/
@@ -25,6 +27,7 @@ require.config({
     backbone: '../bower_components/backbone/backbone',
     'backbone-forms': '../bower_components/backbone-forms/distribution.amd/backbone-forms',
     backbone_forms: '../bower_components/backbone-forms/distribution.amd/backbone-forms.min',
+    FileUploadEditor: '../bower_components/nsBackbonesTools/FileUploadEditor/backboneForm-editors-fileUpload',
     'backbone.list': '../bower_components/backbone-forms/distribution.amd/editors/list',
     marionette: '../bower_components/marionette/lib/core/backbone.marionette',
     'backbone.babysitter': '../bower_components/backbone.babysitter/' +
@@ -32,6 +35,7 @@ require.config({
     'backbone.wreqr': '../bower_components/backbone.wreqr/lib/backbone.wreqr',
     radio: '../bower_components/backbone.radio/build/backbone.radio',
     bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
+    transition: '../bower_components/bootstrap/js/transition',
     sha1: '../bower_components/sha1/bin/sha1',
     i18n: '../bower_components/i18n/i18next',
     moment: '../bower_components/moment/min/moment.min',
@@ -102,6 +106,9 @@ require.config({
     fancytree_dnd: {
       deps: ['fancytree'],
     },
+    transition: {
+      deps: ['bootstrap'],
+    },
     i18n: {
       deps: ['jquery'],
       exports: '$',
@@ -140,11 +147,11 @@ require(['app', 'templates','translater','config'],
           //user: userDatas.Name,
           user: 'Schtroudel Meister',
           //language: userDatas.UserLanguage,
-          language: "en",
+          language: "kz",
           //status: userDatas.RoleInThes,
-        //status: 'Administrateur'
-        status: 'SuperUser'
-        //status: 'User'
+          status: 'Administrateur'
+        //status: 'SuperUser'
+        //status: 'User'w
       });
         //this.translater = Translater.setTranslater(userDatas.UserLanguage.toLowerCase());
         this.translater = Translater.setTranslater('en');
