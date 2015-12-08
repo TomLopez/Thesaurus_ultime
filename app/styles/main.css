@@ -10105,6 +10105,10 @@ input[type="text"] {
   height: 25px;
   width: 80%;
 }
+select.form-control {
+  width: 80%;
+  margin-left: 7%;
+}
 label {
   display: inline-block;
 }
