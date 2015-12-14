@@ -147,7 +147,7 @@ require(['app', 'templates','translater','config'],
           //user: userDatas.Name,
           user: 'Schtroudel Meister',
           //language: userDatas.UserLanguage,
-          language: "en",
+          language: "kz",
           //status: userDatas.RoleInThes,
           status: 'Administrateur'
         //status: 'SuperUser'

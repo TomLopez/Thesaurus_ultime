@@ -10118,6 +10118,19 @@ div[name=TTop_Date] {
 fieldset label {
   margin-left: 7%;
 }
+.colapsableField {
+  background-color: #dee1e3;
+}
+.colapsableField ul > div.list-item {
+  width: 45%;
+  margin-left: 4px;
+  margin-top: 5px;
+  padding: 20px;
+  border: 1px solid #FFF;
+  border-radius: 0px 9px 9px 9px;
+  -moz-border-radius: 0px 9px 9px 9px;
+  -webkit-border-radius: 0px 9px 9px 9px;
+}
 /*==========  base  ==========*/
 .login-page {
   color: white;

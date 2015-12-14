@@ -56,7 +56,7 @@
 		"field_TAtt_Type":"Type d'attribut :",
 		"field_TTopicFile":"Fichier joint :"
 	},
-	" ":
+	"topicFile_field":
 	{
 		"field_TTFi_FK_Att_PKID":"Clef du fichier :",
 		"field_TTFi_Blob":"fichier :",

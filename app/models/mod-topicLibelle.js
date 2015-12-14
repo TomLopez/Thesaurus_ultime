@@ -12,10 +12,19 @@ function(Marionette, Backbone, Config, I18n) {
       TLib_PK_ID:   {type: 'Hidden', editorAttrs: {disabled: true}, title: $.i18n.t('topicLibelle_field.lib_PKLibelle'), editorClass: 'form-control'},
     },
     initialize: function(options){
+      console.log('Zblarg',this);
+      console.log('Backbone',Backbone.history.fragment);
+      if(Backbone.history.fragment){
+        var currentAction = Backbone.history.fragment;
+        var currentId = currentAction.split('/')[1];
+        console.log('currentId',currentId);
+      }else{
+        var currentId = null;
+      }
       var languages = [];
       $.ajax({
         type: 'GET',
-        url: Config.servUrl + 'language',
+        url: Config.servUrl +  (currentId ? 'thesaurus/languageRestrict?ID=' + currentId : 'language'),
         async:false
       }).done(function(data){
         $.each(data,function(){

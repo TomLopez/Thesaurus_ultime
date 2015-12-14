@@ -18,12 +18,12 @@ define(['marionette', 'backbone', 'translater', 'config', 'modTopicLibelle', 'mo
           fieldClass: 'colapsableField',
           title: $.i18n.t("topic_field.zone_libelle")
         },
-/*          TAttibute:{
+          TAttribute:{
             type: 'ListOfNestedModel',
             subschema: (new ModAttribute()).schema,
             fieldClass: 'colapsableField',
             title: $.i18n.t("topic_field.zone_libelle")
-          }*/
+          }
       },
       initialize: function(options){
         this.schema = {
@@ -40,12 +40,12 @@ define(['marionette', 'backbone', 'translater', 'config', 'modTopicLibelle', 'mo
             fieldClass: 'colapsableField',
             title: $.i18n.t("topic_field.zone_libelle")
           },
-          /*TAttibute:{
+          TAttribute:{
             type: 'ListOfNestedModel',
             subschema: (new ModAttribute()).schema,
             fieldClass: 'colapsableField',
             title: $.i18n.t("topic_field.zone_attribute")
-          }*/
+          }
         }
       }
     });

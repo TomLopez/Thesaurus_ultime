@@ -60,7 +60,7 @@ function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneFo
       var _this = this;
       console.log('thisModifTopic', this.topic);
       var testGege = this.form.commit();
-      console.log('testGege',testGege);
+      console.log('testGege',this);
       this.topic.save(null,{
         success: function() {
           var tree = $('#' + config.treeDivId).fancytree('getTree');

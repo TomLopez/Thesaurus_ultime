@@ -18,11 +18,11 @@ function(Marionette, Backbone, BackboneForm, ListOfNestedModel, ModTopic, ModTop
         var topicParent = new ModTopic({id: options.key});
         topicParent.fetch({async: false});
         var topic = new ModTopic();
-/*        var topicLibelle = new ModTopicLibelle();
-        topicLibelle.set({
+        //var topicLibelle = new ModTopicLibelle();
+       /* topicLibelle.set({
           TLib_FK_TLan_ID : 'en'
         });*/
-
+        //topicLibelle.data = {TLib_FK_TLan_ID: 'en'};
         //console.log("topicLibelle.schema",topicLibelle.schema)
         //topicLibelle.schema.TLib_FK_TLan_ID.options = [{icon: null, label: 'English', val: 'en'}];
         topic.set({
@@ -33,6 +33,7 @@ function(Marionette, Backbone, BackboneForm, ListOfNestedModel, ModTopic, ModTop
           TTop_BranchOrder: topicParent.get('TTop_BranchOrder'),
           //TTopicLibelle : [topicLibelle]
         });
+        //topic.data = {TTopicLibelle : {TLib_FK_TLan_ID: 'en'}}
         //topic.schema.TTopicLibelle.subschema.TLib_FK_TLan_ID.options = [{icon: null, label: 'English', val: 'en'}];
         this.topic = topic;
         console.log('parent',topicParent);
@@ -77,10 +78,13 @@ function(Marionette, Backbone, BackboneForm, ListOfNestedModel, ModTopic, ModTop
           model: this.topic
       }).render();
       this.form = form;
+
+
       $('#topicContainer').append(form.el);
+
       console.log('zgueg',$('#TLib_FK_TLan_ID').val('en'));
     },
-    validation:function(){
+    validation: function() {
       var _this = this;
       console.log('this.topic',this.topic);
       this.form.commit();
