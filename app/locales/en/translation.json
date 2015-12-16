@@ -89,5 +89,19 @@
 		"field_TLan_PK_Name": "ID of the language (ex \"fr\",\"en\")* :",
 		"field_label": "Label of the language* :",
 		"field_description": "Description of the language :"
+	},
+	"dnd_return": {
+		"status_ok":"OK",
+		"status_language_error":"The shifting of __topicName__ hasn't be performed. It contain more translations than the destination topic.",
+		"status_doublon_error":"The shifting of __topicName__ hasn't be performed. There is another term with the same name for this Top Concept.",
+		"status_domain_error":"The shifting of __topicName__ hasn't be performed. Grad'n'Drop cannot create domain terms.",
+		"status_unknown_error":"The shifting of __topicName__ hasn't be performed. Unknown error.",
+		"swal_title": "Are you sure?",
+		"swal_text": "The shiffting will be definitiv",
+		"swal_yesBtn": "Yes, move it",
+		"swal_noBtn": "No, let it be",
+		"growl_title_dnd":"Drag'n'Drop",
+		"growl_topicDndSuccess": "The shifting of the __topicName__ as been performed",
+		"growl_topicDndCancel": "The shiffting has benn canceled"
 	}
 }

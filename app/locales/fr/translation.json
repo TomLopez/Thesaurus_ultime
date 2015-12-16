@@ -89,5 +89,19 @@
 		"field_TLan_PK_Name": "ID de la langue (ex \"fr\",\"en\")* :",
 		"field_label": "Label de la langue* :",
 		"field_description": "Description de la langue :"
+	},
+	"dnd_return": {
+		"status_ok":"OK",
+		"status_language_error":"Le déplacement du terme __topicName__ n'as pu être effectuer. Il contient plus de traductions que le terme de destination.",
+		"status_doublon_error":"Le déplacement du terme __topicName__ n'as pu être effectuer. Il existe un autre terme portant le meme nom pour se Top Concept.",
+		"status_domain_error":"Le déplacement du terme __topicName__ n'as pu être effectuer. Le drag'n'drop ne peut créer de domaines.",
+		"status_unknown_error":"Le déplacement du terme __topicName__ n'as pu être effectuer. Erreur inconnue.",
+		"swal_title": "Etes vous sur?",
+		"swal_text": "Le déplacement de se terme est définitif.",
+		"swal_yesBtn": "Oui, déplacer",
+		"swal_noBtn": "Non, le laisser",
+		"growl_title_dnd":"Drag'n'Drop",
+		"growl_topicDndSuccess": "Le déplacement de __topicName__ a été effectué",
+		"growl_topicDndCancel": "Le déplacement à était annulé."
 	}
 }

@@ -16,6 +16,7 @@ function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneFo
     events: {
       'click #validation': 'validation',
       'click #retour': 'retour',
+      'change select[id=TAtt_Type]':'changeForFile'
     },
 
     initialize: function(options) {
@@ -50,27 +51,77 @@ function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneFo
 
     onShow: function(options) {
       var form = new Backbone.Form({
-          model: this.topic
+        model: this.topic
       }).render();
       this.form = form;
       $('#topicContainer').append(form.el);
       this.$el.i18n();
     },
-    validation:function() {
+    validation: function() {
       var _this = this;
-      console.log('thisModifTopic', this.topic);
       var testGege = this.form.commit();
-      console.log('testGege',this);
+      var divsAttibutes = $('.file-container');
+      var allFiles = [];
+
       this.topic.save(null,{
-        success: function() {
+        success: function(data) {
+          var fd = new FormData();
+          $.each(divsAttibutes, function(){
+            var theElement = $(this)[0];
+            var theElementField = $(theElement).closest('div .colapsableField')[0];
+            if($(theElementField).attr('class').indexOf('hidden') == -1){
+              var fieldsetContainer = $(this).closest('div .list-item')[0];
+              var inputName = $(fieldsetContainer).find('input[name=TAtt_FieldName]')[0];
+              var attributeName = $(inputName).val();
+              var elem = this;
+              $.each(data.attributes.TAttribute, function(){
+                if(this.TAtt_FieldName == attributeName){
+                  allFiles.push({id: this.TAtt_PK_ID, file: $(elem)[0].files[0]});
+                  fd.append(this.TAtt_PK_ID, $(elem)[0].files[0]);
+                  return;
+                }
+              });
+            }
+          });
+          $.ajax({
+            type: 'POST',
+            url: config.servUrl + 'thesaurus/insertFiles',
+            processData: false,
+            contentType: false,
+            data: fd
+          }).done(function() {
+            console.log('done');
+          }).error(function() {
+            console.log('error');
+          });
           var tree = $('#' + config.treeDivId).fancytree('getTree');
-          var nodeToUpdate = tree.getNodeByKey(_this.topic.id);
+          var nodeToUpdate = tree.getNodeByKey('' + _this.topic.attributes.TTop_PK_ID );
           nodeToUpdate.setTitle(_this.topic.attributes.TTop_Name);
+          Backbone.navigate(Backbone.history.navigate('#consultation/' + _this.topic.attributes.TTop_PK_ID, true));
         }
       });
     },
     retour: function() {
 
+    },
+    changeForFile: function(options){
+      var fieldset = $(options.currentTarget).closest('fieldset')[0];
+      var fileContainer = $(fieldset).find('.colapsableField')[0];
+      var attrValuelabel = $(fieldset).find('label[for=TAtt_FieldValue]')[0];
+      var attrValueZone = $(attrValuelabel).parent()[0];
+      console.log('attrValueZone',attrValueZone);
+      if($(fileContainer).attr('class').indexOf('hidden') != -1){
+        if($(options.currentTarget).val() != 1){
+          $(fileContainer).removeClass('hidden');
+          $(attrValueZone).addClass('hidden');
+        }
+      }else{
+        if($(options.currentTarget).val() == 1){
+          $(fileContainer).addClass('hidden');
+          $(attrValueZone).removeClass('hidden');
+        }
+      }
+      console.log("$(options.currentTarget).closest('fieldset').find('colapsableField')",$(fieldset).find('.colapsableField'))
     }
   });
 });

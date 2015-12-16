@@ -6,12 +6,14 @@ define(['marionette',
   'jqueryui',
   'i18n',
   'config',
-  'requirejs-text!base/tree/tpl/tpl-tree.html'],
-  function(Marionette, Backbone, Translater, TransitionRegion, jQuery, ui, I18n, config, Schtroudel) {
+  'requirejs-text!base/tree/tpl/tpl-tree.html',
+  'sweetAlert',
+  'growl'],
+  function(Marionette, Backbone, Translater, TransitionRegion, jQuery, ui, I18n, config, Template, swal) {
     'use strict';
     return Marionette.LayoutView.extend({
 
-      template: Schtroudel,
+      template: Template,
       className: 'ns-full-height treeContainer',
       apiUrl: 'http://localhost:56121/api/thesaurus',
       language: 'fr',
@@ -20,6 +22,12 @@ define(['marionette',
         'change #hideMode': 'uselessMode',
         'keyup input[name=treeview-search]': 'research',
         'click #reinit': 'resetResearch'
+      },
+      dndEvent: {
+        0: 'status_ok',
+        1: 'status_language_error',
+        2: 'status_doublon_error',
+        3: 'status_domain_error'
       },
 
       initialize: function(options){
@@ -31,7 +39,7 @@ define(['marionette',
       //this.$el.i18n();
     },
     render: function(options) {
-      this.$el = $(Schtroudel);
+      this.$el = $(Template);
       var _this = this;
       this.tree = this.$el.find('#treeView').fancytree({
         debugLevel: 0,
@@ -91,7 +99,6 @@ define(['marionette',
          //node.setExpanded(true);
          //return ["before", "after"];
          if(window.app.user.get('status').toLowerCase() != 'administrateur'){
-          alert();
           return false;
         }else{
           return true;
@@ -104,7 +111,6 @@ define(['marionette',
           var thisNode = node;
           var otherNode = data.otherNode;
           var hitmode = data.hitMode;
-          console.log('args', arguments, hitmode)
 
          if (data.otherNode.parent.key != node.parent.key) {
           $.ajax({
@@ -114,10 +120,10 @@ define(['marionette',
             contentType: "application/json; charset=utf-8",
             //data: '{ "iMovedTopicId" : "' + otherNode.key + '", "iDestTopicId": "' + thisNode.key + '", "sHitMode": "' + hitmode + '" }',
           }).success(function (data) {
-            if (data) {
+            if (data == 0) {
               _this.confirmDrop({'thisNode': thisNode, 'otherNode': otherNode, 'hitMode': hitmode});
             } else {
-              $.growl.error({ message: "Le terme ne peut être déplacer ici pour des raisons de doublons TTop_Name : " + otherNode.title });
+              $.growl.error({ message: I18n.t("dnd_return." + _this.dndEvent[data], {topicName: otherNode.title})});
             }
           });
         } else {
@@ -125,7 +131,7 @@ define(['marionette',
             thisNode.setExpanded(true).done(function () { otherNode.moveTo(thisNode, hitmode) });
             $.ajax({
               type: 'GET',
-              url: apiUrl + '/dropEnding?iMovedTopicId=' + otherNode.key + '&iDestTopicId=' + thisNode.key + '&sHitMode='  + hitmode,
+              url: _this.apiUrl + '/dropEnding?iMovedTopicId=' + otherNode.key + '&iDestTopicId=' + thisNode.key + '&sHitMode='  + hitmode,
               datatype: 'json',
               contentType: "application/json; charset=utf-8",
               //data: '{ "id_movedNode" : "' + otherNode.key + '", "id_destNode": "' + thisNode.key + '", "order": "' + hitmode + '" }',
@@ -225,51 +231,35 @@ confirmDrop: function(options) {
   thisNode = options.thisNode;
   otherNode = options.otherNode;
   hitmode = options.hitMode;
-  var info;
-  if (hitmode == 'over') {
-    info = $.i18n.t("growlMessage.growl_topicDndSon", { node1: otherNode.title, node2: thisNode.title });
-  } else {
-    info = $.i18n.t("growlMessage.growl_topicDndBrother", { node1: otherNode.title, node2: thisNode.title });
-  }
-  $('<div></div>').appendTo('body')
-  .html('<div><h6>' + info + '</h6></div>')
-  .dialog({
-    modal: true,
-    title: $.i18n.t('dragNDrop_messages.confirm'),
-    zIndex: 10000,
-    autoOpen: true,
-    width: '300px',
-    resizable: false,
-    buttons: {
-      Yes: function () {
-        $.ajax({
+
+  swal({
+    title: I18n.t("dnd_return.swal_title"),
+    text: I18n.t("dnd_return.swal_text"),
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: I18n.t("dnd_return.swal_yesBtn"),
+    cancelButtonText: I18n.t("dnd_return.swal_noBtn"),
+    closeOnConfirm: true,
+    closeOnCancel: true
+  },
+  function(isConfirm){
+    if (isConfirm) {
+      $.ajax({
           type: 'GET',
           url: config.servUrl + "thesaurus/dropEnding?id_movedNode="+otherNode.key+"&id_destNode="+thisNode.key +"&order="+ hitmode,
           //datatype: 'json',
           contentType: "application/json; charset=utf-8",
           //data: '{ "id_movedNode" : "' + otherNode.key + '", "id_destNode": "' + thisNode.key + '", "order": "' + hitmode + '" }',
         }).success(function (data) {
-          $.growl.notice({ title: $.i18n.t("growlMessage.growl_title_dnd"), message: $.i18n.t("growlMessage.growl_topicDndSuccess", { topicName: data.TTop_Name }) });
-          if (Backbone.history.fragment.indexOf("modif") == -1 && Backbone.history.fragment.indexOf("suppr") == -1) {
-            isTopicMenu = true;
-            adaptMenu(otherNode.key);
-            $("#unitaireInfo").val(otherNode.key);
-            router.navigate('consultation/' + data.TTop_PK_ID, { trigger: true });
-          }
+          $.growl.notice({ title: $.i18n.t("dnd_return.growl_title_dnd"), message: $.i18n.t("dnd_return.growl_topicDndSuccess", { topicName: data.TTop_Name }) });
+          Backbone.history.navigate('#consultation/' + data.TTop_PK_ID, { trigger: true });
         }).error(function () {
-          $.growl.error({ message: $.i18n.t("growlMessage.growl_topicDndErrorUnknown") });
+          $.growl.error({ message: $.i18n.t("dnd_return.status_unknown_error") });
         });
         thisNode.setExpanded(true).done(function () { otherNode.moveTo(thisNode, hitmode); });
-
-        $(this).dialog("close");
-      },
-      No: function () {
-        $.growl.warning({ message: $.i18n.t("growlMessage.growl_topicDndCancel") });
-        $(this).dialog("close");
-      }
-    },
-    close: function (event, ui) {
-      $(this).remove();
+    } else {
+        $.growl.warning({ message: $.i18n.t("dnd_return.growl_topicDndCancel") });
     }
   });
 },

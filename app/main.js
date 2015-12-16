@@ -30,6 +30,7 @@ require.config({
     FileUploadEditor: '../bower_components/nsBackbonesTools/FileUploadEditor/backboneForm-editors-fileUpload',
     'backbone.list': '../bower_components/backbone-forms/distribution.amd/editors/list',
     marionette: '../bower_components/marionette/lib/core/backbone.marionette',
+    growl: '../bower_components/growl/javascripts/jquery.growl',
     'backbone.babysitter': '../bower_components/backbone.babysitter/' +
     'lib/backbone.babysitter',
     'backbone.wreqr': '../bower_components/backbone.wreqr/lib/backbone.wreqr',
@@ -147,11 +148,11 @@ require(['app', 'templates','translater','config'],
           //user: userDatas.Name,
           user: 'Schtroudel Meister',
           //language: userDatas.UserLanguage,
-          language: "kz",
+          language: 'fr',
           //status: userDatas.RoleInThes,
           status: 'Administrateur'
         //status: 'SuperUser'
-        //status: 'User'w
+        //status: 'User'
       });
         //this.translater = Translater.setTranslater(userDatas.UserLanguage.toLowerCase());
         this.translater = Translater.setTranslater('en');
