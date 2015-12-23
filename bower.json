@@ -18,6 +18,8 @@
     "moment": "~2.10.3",
     "nsBackbonesTools": "https://github.com/NaturalSolutions/NaturalJS-BackBone-Forms-Editors.git",
     "sweetalert": "~0.5.0",
-    "requirejs-text": "~2.0.12"
+    "requirejs-text": "~2.0.12",
+    "growl":"https://github.com/ksylvest/jquery-growl",
+    "sweetalert":"https://github.com/t4t5/sweetalert"
     }
 }
