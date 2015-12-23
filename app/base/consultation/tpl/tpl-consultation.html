@@ -1,3 +1,17 @@
+<%
+var mimeType = {
+    "jpg":{mime :"image/jpeg",imgPath:"app/styles/img/consult/ico_images.png"},
+    "jpeg":{mime :"image/jpeg",imgPath:"app/styles/img/consult/ico_images.png"},
+    "gif":{mime :"image/gif",imgPath:"app/styles/img/consult/ico_images.png"},
+    "bmp":{mime :"image/bmp",imgPath:"app/styles/img/consult/ico_images.png"},
+    "png":{mime :"image/png",imgPath:"app/styles/img/consult/ico_images.png"},
+    "pdf":{mime :"application/pdf",imgPath:"app/styles/img/consult/ico_pdf.png"},
+    "doc":{mime :"application/msword",imgPath:"app/styles/img/consult/ico_doc.png"},
+    "docx":{mime :"application/vnd.openxmlformats-officedocument.wordprocessingml.document",imgPath:"app/styles/img/consult/ico_doc.png"},
+    "txt":{mime :"text/plain",imgPath:"app/styles/img/consult/ico_doc.png"}
+}
+%>
+
 <div id="contConsult">
 	<h1 id="consultTitle"><span data-i18n="topic_consult.consult_title">Terme : </span><span id="title" class="topicTitle"><%=topic.TTop_Name%></span></h1>
     <div id="topicContainer">
@@ -33,6 +47,27 @@
             });
         }
         }%>
+    </div>
+    <div class="attributescontainer">
+        <%$.each(topic.TAttribute,function(){%>
+            <fieldset class="form-data fieldset-attributes">
+            <p class="topicLibelle"><span data-i18n="topicAttribute_field.field_TAtt_FieldName"></span><span class="topicValues" id="TAtt_FieldName"><%=this.TAtt_FieldName%></span></p>
+            <%if(this.TAtt_Type == 1){%>
+                <p class="topicLibelle"><span data-i18n="topicAttribute_field.field_TAtt_FieldValue"></span><span class="topicValues" id="TAtt_FieldValue"><%=this.TAtt_FieldValue%></span></p>
+            <% }else if(this.TAtt_Type == 2){%>
+                <a target="_blank" href="data:image/png;base64,<%=this.TTopic_File.TTFi_Blob_Str%>">
+                <img class="attributImg" src="data:image/png;base64,<%=this.TTopic_File.TTFi_Blob_Str%>">
+                </a>
+            <%}else if(this.TAtt_Type == 3){
+                try{%>
+                <a id="download" href="data:<%=mimeType[this.TTopic_File.TTFi_Extension].mime%>;charset=utf-16le;base64,<%=this.TTopic_File.TTFi_Blob_Str%>" download="<%=this.TAtt_FieldName +''+ this.TTopic_File.TTFi_Extension%>"><img class="imgDl" src="<%=mimeType[this.TTopic_File.TTFi_Extension].imgPath%>"/></a>
+            <%}catch(e){
+                console.log('download error', e);%>
+                <p class="topicLibelle"><span data-i18n="topicFile_field.error_loading"></span></p>
+            <%}
+            }%>
+            </fieldset>
+        <%});%>
     </div>
     </div>
 </div>

@@ -27,7 +27,7 @@ define(['marionette', 'backbone', 'translater', 'config', 'modTopicLibelle', 'mo
       },
       initialize: function(options){
         this.schema = {
-          TTop_Name:      {type: 'Text', title: $.i18n.t("topic_field.field_name"), editorClass: 'form-control'},
+          TTop_Name:      {type: 'Text', title: $.i18n.t("topic_field.field_name"), editorClass: 'form-control', validators: ['required']},
           TTop_Definition:       {type: 'TextArea', title: $.i18n.t("topic_field.field_definitionFr"), editorClass: 'form-control'},
           TTop_FullPath:      {type: 'Text',editorAttrs: {disabled: true}, title: $.i18n.t("topic_field.field_fullpath"), editorClass: 'form-control'},
           TTop_ParentID:      {type: 'Text',editorAttrs: {disabled: true}, title: $.i18n.t("topic_field.field_parentId"), editorClass: 'form-control'},

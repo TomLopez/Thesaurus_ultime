@@ -42,8 +42,8 @@ function(Marionette,Backbone) {
 		},
 		menuItemClick: function(e){
 			console.log(e);
-			return;
-			if(e.currentTarget.id != 'consultation'){
+			//return;
+			if($(e.currentTarget).attr('id') != 'recherche'){
 				app.router.navigate('#' + e.currentTarget.id,{trigger: true});
 			}else{
 				$('input[name=treeview-search]').focus();

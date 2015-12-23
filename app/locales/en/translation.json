@@ -35,16 +35,27 @@
 		"field_isDeprecated_yesValue": "Yes",
 		"field_isDeprecated_noValue": "No",
 		"zone_libelle": "Translation",
-		"zone_attribute": "Attributes"
+		"zone_attribute": "Attributes",
+		"field_attribute_warning_typeChange":"You cannot change the type of an existing attribute.",
+		"empty_field": "Please fill all the required fields."
 	},
 	"topicLibelle_field":
 	{
 		"lib_name":"Translated name",
 		"lib_fullPath":"Translated fullpath",
 		"lib_Definition":"Translated definition",
-		"lib_FKLangue":"Lnguage",
+		"lib_FKLangue":"Language",
 		"lib_FKTopic":"Topic's key",
 		"lib_PKLibelle":"Libelle's key"
+	},
+	"forced_Translation":{
+		"field_legend": "Required translation",
+		"field_language": "Language : ",
+		"field_nameTrans": "Translated name* : ",
+		"field_fullpathTrans": "Translated fullpath* : ",
+		"field_definitionTrans": "Translated definition : ",
+		"btn_create": "Create",
+		"btn_back": "Back"
 	},
 	"topicAttribute_field":
 	{
@@ -60,7 +71,8 @@
 	{
 		"field_TTFi_FK_Att_PKID":"File key :",
 		"field_TTFi_Blob":"File :",
-		"field_TTFi_Extension":"Extension type :"
+		"field_TTFi_Extension":"Extension type :",
+		"error_loading": "An error occured during file loading."
 	},
 	"topic_consult": {
 		"consult_title": "Topic : ",
@@ -86,9 +98,14 @@
 		"field_noInfo": "The translation doesnt exist in yout language."
 	},
 	"language_edit": {
+		"language": "Language :",
 		"field_TLan_PK_Name": "ID of the language (ex \"fr\",\"en\")* :",
 		"field_label": "Label of the language* :",
-		"field_description": "Description of the language :"
+		"field_description": "Description of the language :",
+		"btn_edit": "Modifier",
+		"btn_back": "retour",
+		"success_message": "The language __lng__ has been saved successfully.",
+		"error_message" : "An error occured during the saving of __lng__."
 	},
 	"dnd_return": {
 		"status_ok":"OK",
@@ -103,5 +120,8 @@
 		"growl_title_dnd":"Drag'n'Drop",
 		"growl_topicDndSuccess": "The shifting of the __topicName__ as been performed",
 		"growl_topicDndCancel": "The shiffting has benn canceled"
+	},
+	"header_menu":{
+		"language": "Language manager"
 	}
 }

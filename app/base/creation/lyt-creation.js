@@ -1,6 +1,6 @@
 define(['marionette', 'backbone', 'backbone_forms',
-  'listOfNestedModel','modTopic', 'modTopicLibelle','config', 'i18n'],
-function(Marionette, Backbone, BackboneForm, ListOfNestedModel, ModTopic, ModTopicLibelle, config) {
+  'listOfNestedModel','modTopic', 'modTopicLibelle','config', 'i18n', 'growl'],
+function(Marionette, Backbone, BackboneForm, ListOfNestedModel, ModTopic, ModTopicLibelle, config, I18n) {
   'use strict';
 
   return Marionette.LayoutView.extend({
@@ -18,35 +18,21 @@ function(Marionette, Backbone, BackboneForm, ListOfNestedModel, ModTopic, ModTop
         var topicParent = new ModTopic({id: options.key});
         topicParent.fetch({async: false});
         var topic = new ModTopic();
-        //var topicLibelle = new ModTopicLibelle();
-       /* topicLibelle.set({
-          TLib_FK_TLan_ID : 'en'
-        });*/
-        //topicLibelle.data = {TLib_FK_TLan_ID: 'en'};
-        //console.log("topicLibelle.schema",topicLibelle.schema)
-        //topicLibelle.schema.TLib_FK_TLan_ID.options = [{icon: null, label: 'English', val: 'en'}];
         topic.set({
           TTop_ParentID: topicParent.get('TTop_PK_ID'),
           TTop_FullPath: topicParent.get('TTop_FullPath'),
           TTop_Type: topicParent.get('TTop_Type'),
           TTop_Date: Date.now(),
           TTop_BranchOrder: topicParent.get('TTop_BranchOrder'),
-          //TTopicLibelle : [topicLibelle]
         });
-        //topic.data = {TTopicLibelle : {TLib_FK_TLan_ID: 'en'}}
-        //topic.schema.TTopicLibelle.subschema.TLib_FK_TLan_ID.options = [{icon: null, label: 'English', val: 'en'}];
-        this.topic = topic;
-        console.log('parent',topicParent);
-        console.log('child',topic);
-
       }else {
-        this.topic = new ModTopic();
-        var topicLibelle = new ModTopicLibelle();
-        topicLibelle.set({
-          TLib_FK_TLan_ID : 'en'
+        var topic = new ModTopic();
+        topic.set({
+          TTop_ParentID:null,
+          TTop_Date: Date.now()
         });
-        this.topic.set({TTopicLibelle:[topicLibelle]});
       }
+      this.topic = topic;
     },
 
     serializeData: function() {
@@ -86,46 +72,41 @@ function(Marionette, Backbone, BackboneForm, ListOfNestedModel, ModTopic, ModTop
     },
     validation: function() {
       var _this = this;
-      console.log('this.topic',this.topic);
-      this.form.commit();
-      this.topic.save(null,{
-        success: function(data) {
-          console.log('save_this',data)
-          var tree = $('#' + config.treeDivId).fancytree('getTree');
-          var parentNode;
-          if(_this.topic.attributes.TTop_ParentID != null && _this.topic.attributes.TTop_ParentID != '') {
-            parentNode = tree.getNodeByKey(_this.topic.attributes.TTop_ParentID);
-          }else {
-            parentNode = tree.getRootNode();
-          }
-          console.log('theparent', parentNode);
-          parentNode.addChildren({
-            title: _this.topic.attributes.TTop_Name,
-            key: _this.topic.id,
-            data: {
-              deprecated: false,
-              fullpath: _this.topic.attributes.TTop_FullPath,
-              fullpathTranslated: null,
-              value: _this.topic.attributes.TTop_Name,
-              valueTranslated: null,
+      if(this.form.validate() == null){
+        this.form.commit();
+        this.topic.save(null,{
+          success: function(data) {
+            var tree = $('#' + config.treeDivId).fancytree('getTree');
+            var parentNode;
+            if(_this.topic.attributes.TTop_ParentID != null && _this.topic.attributes.TTop_ParentID != '') {
+              parentNode = tree.getNodeByKey(_this.topic.attributes.TTop_ParentID);
+            }else {
+              parentNode = tree.getRootNode();
             }
-          });
-          parentNode.setExpanded(true);
-          var topicLibelle = new ModTopicLibelle();
-          /*topicLibelle.set({
-            TLib_FK_TLan_ID: 'en',
-            TLib_Name: $('#en_TLib_Name'),
-            TLib_Definition: $('#en_TLib_Definition'),
-            TLib_FK_TTop_ID: data.id
-          });*/
-          topicLibelle.save({
-            TLib_FK_TLan_ID: 'en',
-            TLib_Name: $('#en_TLib_Name').val(),
-            TLib_Definition: $('#en_TLib_Definition').val(),
-            TLib_FK_TTop_ID: data.id
-          });
-        }
-      });
+            parentNode.addChildren({
+              title: _this.topic.attributes.TTop_Name,
+              key: _this.topic.id,
+              data: {
+                deprecated: false,
+                fullpath: _this.topic.attributes.TTop_FullPath,
+                fullpathTranslated: null,
+                value: _this.topic.attributes.TTop_Name,
+                valueTranslated: null,
+              }
+            });
+            parentNode.setExpanded(true);
+            var topicLibelle = new ModTopicLibelle();
+            topicLibelle.save({
+              TLib_FK_TLan_ID: 'en',
+              TLib_Name: $('#en_TLib_Name').val(),
+              TLib_Definition: $('#en_TLib_Definition').val(),
+              TLib_FK_TTop_ID: data.id
+            });
+          }
+        });
+      }else{
+        $.growl.error({message: I18n.t("topic_field.empty_field")});
+      }
     },
     retour: function(){
 

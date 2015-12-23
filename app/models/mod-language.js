@@ -10,8 +10,8 @@ function(Marionette, Backbone, Config) {
 	},
 	initialize: function(options){
 		this.schema = {
-			TLan_PK_Name:      {type:'Text', title: $.i18n.t('language_edit.field_TLan_PK_Name')},
-			TLan_Label:       {type:'Text', title: $.i18n.t('language_edit.field_label')},
+			TLan_PK_Name:      {type:'Text', title: $.i18n.t('language_edit.field_TLan_PK_Name'), validators: ['required']},
+			TLan_Label:       {type:'Text', title: $.i18n.t('language_edit.field_label'), validators: ['required']},
 			TLan_Description:      {type:'Text', title: $.i18n.t('language_edit.field_description')},
 		}
 	}

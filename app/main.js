@@ -37,6 +37,8 @@ require.config({
     radio: '../bower_components/backbone.radio/build/backbone.radio',
     bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
     transition: '../bower_components/bootstrap/js/transition',
+    tooltipster: '../bower_components/tooltipster/js/jquery.tooltipster',
+    'tooltipster-list': '../bower_components/tooltipster-list/dist/js/tooltipList',
     sha1: '../bower_components/sha1/bin/sha1',
     i18n: '../bower_components/i18n/i18next',
     moment: '../bower_components/moment/min/moment.min',
@@ -68,6 +70,19 @@ require.config({
     underscore: {
       exports: '_',
     },
+     tooltipster: {
+            deps: [
+                'jquery'
+            ],
+            exports: '$'
+        },
+    'tooltipster-list': {
+            deps: [
+                'jquery',
+                'tooltipster'
+            ],
+            exports: '$'
+        },
     backbone: {
       deps: ['jquery', 'underscore'],
       exports: 'Backbone',
@@ -148,7 +163,7 @@ require(['app', 'templates','translater','config'],
           //user: userDatas.Name,
           user: 'Schtroudel Meister',
           //language: userDatas.UserLanguage,
-          language: 'fr',
+          language: 'en',
           //status: userDatas.RoleInThes,
           status: 'Administrateur'
         //status: 'SuperUser'

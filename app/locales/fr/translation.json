@@ -35,7 +35,9 @@
 		"field_isDeprecated_yesValue": "Oui",
 		"field_isDeprecated_noValue": "Non",
 		"zone_libelle": "Traduction",
-		"zone_attribute": "Attributs"
+		"zone_attribute": "Attributs",
+		"field_attribute_warning_typeChange":"Vous ne pouyvez pas changer le type d'un attribut existant.",
+		"empty_field": "Veuillez saisir tous les champs requis."
 	},
 	"topicLibelle_field":
 	{
@@ -56,11 +58,12 @@
 		"field_TAtt_Type":"Type d'attribut :",
 		"field_TTopicFile":"Fichier joint :"
 	},
-	" ":
+	"topicFile_field":
 	{
 		"field_TTFi_FK_Att_PKID":"Clef du fichier :",
 		"field_TTFi_Blob":"fichier :",
-		"field_TTFi_Extension":"type d'extension :"
+		"field_TTFi_Extension":"type d'extension :",
+		"error_loading": "Une erreur est survenue lors du chargement du fichier."
 	},
 	"topic_consult": {
 		"consult_title": "Terme : ",
@@ -85,10 +88,24 @@
 		"field_isDeprecated_noValue": "Non",
 		"field_noInfo": "La traduction n'est pas définie dans votre langue."
 	},
+	"forced_Translation":{
+		"field_legend": "Traduction obligatoire",
+		"field_language": "Langue : ",
+		"field_nameTrans": "Nom traduit* : ",
+		"field_fullpathTrans": "Chemin complet traduit* : ",
+		"field_definitionTrans": "Définition traduite : ",
+		"btn_create": "Créer",
+		"btn_back": "Retour"
+	},
 	"language_edit": {
+		"language": "Langue :",
 		"field_TLan_PK_Name": "ID de la langue (ex \"fr\",\"en\")* :",
 		"field_label": "Label de la langue* :",
-		"field_description": "Description de la langue :"
+		"field_description": "Description de la langue :",
+		"btn_edit": "Modifier",
+		"btn_back": "retour",
+		"success_message": "Le langage __lng__ à bien été enregistrer.",
+		"error_message" : "Une erreur est survenue durant la sauvegarde de __lng__."
 	},
 	"dnd_return": {
 		"status_ok":"OK",
@@ -103,5 +120,8 @@
 		"growl_title_dnd":"Drag'n'Drop",
 		"growl_topicDndSuccess": "Le déplacement de __topicName__ a été effectué",
 		"growl_topicDndCancel": "Le déplacement à était annulé."
+	},
+	"header_menu":{
+		"language": "Manager langues"
 	}
 }

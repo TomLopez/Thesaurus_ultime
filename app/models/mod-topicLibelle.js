@@ -28,7 +28,11 @@ function(Marionette, Backbone, Config, I18n) {
         async:false
       }).done(function(data){
         $.each(data,function(){
-          languages.push({label: this.TLan_Label, val: this.TLan_PK_Name, icon: null})
+          if(window.location.href.indexOf('creation') == -1){
+            languages.push({label: this.TLan_Label, val: this.TLan_PK_Name, icon: null});
+          }else if(this.TLan_PK_Name.toLowerCase() !=  'en'){
+            languages.push({label: this.TLan_Label, val: this.TLan_PK_Name, icon: null});
+          }
         });
       }).error(function(err){
         alert("Une erreur est survenue durant le chargement des langues");
