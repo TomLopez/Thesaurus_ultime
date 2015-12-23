@@ -15,7 +15,7 @@ define(['marionette',
 
       template: Template,
       className: 'ns-full-height treeContainer',
-      apiUrl: congig.servUrl + 'thesaurus',
+      apiUrl: config.servUrl + 'thesaurus',
       language: 'fr',
       events: {
         'change #undeprecateMode': 'deprecatedMode',
