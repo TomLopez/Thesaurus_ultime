@@ -19,7 +19,9 @@
     "nsBackbonesTools": "https://github.com/NaturalSolutions/NaturalJS-BackBone-Forms-Editors.git",
     "sweetalert": "~0.5.0",
     "requirejs-text": "~2.0.12",
-    "growl":"https://github.com/ksylvest/jquery-growl",
-    "sweetalert":"https://github.com/t4t5/sweetalert"
+    "growl":"",
+    "sweetalert": "~0.5.0",
+    "tooltipster": "~3.3.0",
+    "tooltipster-list": "https://github.com/amiceli/tooltipster-list.git"
     }
 }
