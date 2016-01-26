@@ -10882,6 +10882,9 @@ fieldset label {
     width: 100%;
   }
 }
+.tooltipster-content input {
+  display: none !important;
+}
 header {
   background: grey;
   z-index: 10;
@@ -10922,9 +10925,6 @@ header #header-loader svg rect {
 }
 header .withoutInput input {
   display: none;
-}
-header .tooltipster-content input {
-  display: none !important;
 }
 #contConsult {
   background: white;

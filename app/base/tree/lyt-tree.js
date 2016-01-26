@@ -27,7 +27,8 @@ define(['marionette',
         0: 'status_ok',
         1: 'status_language_error',
         2: 'status_doublon_error',
-        3: 'status_domain_error'
+        3: 'status_domain_error',
+        4: 'status_top_error'
       },
 
       initialize: function(options){
@@ -112,7 +113,7 @@ define(['marionette',
           var otherNode = data.otherNode;
           var hitmode = data.hitMode;
 
-         if (data.otherNode.parent.key != node.parent.key) {
+         if ((data.otherNode.parent.key != node.parent.key) || (data.otherNode.parent.key == node.parent.key && hitmode == 'over')) {
           $.ajax({
             type: 'GET',
             url: _this.apiUrl + '/dropDownConstraint?iMovedTopicId=' + otherNode.key + '&iDestTopicId=' + thisNode.key + '&sHitMode='  + hitmode,
@@ -120,10 +121,12 @@ define(['marionette',
             contentType: "application/json; charset=utf-8",
             //data: '{ "iMovedTopicId" : "' + otherNode.key + '", "iDestTopicId": "' + thisNode.key + '", "sHitMode": "' + hitmode + '" }',
           }).success(function (data) {
-            if (data == 0) {
+            console.log('theData', data);
+
+            if (data.enumError == 0) {
               _this.confirmDrop({'thisNode': thisNode, 'otherNode': otherNode, 'hitMode': hitmode});
             } else {
-              $.growl.error({ message: I18n.t("dnd_return." + _this.dndEvent[data], {topicName: otherNode.title})});
+              $.growl.error({ message: I18n.t("dnd_return." + _this.dndEvent[data.enumError], {topicName: otherNode.title})});
             }
           });
         } else {
@@ -241,7 +244,6 @@ confirmDrop: function(options) {
     confirmButtonText: I18n.t("dnd_return.swal_yesBtn"),
     cancelButtonText: I18n.t("dnd_return.swal_noBtn"),
     closeOnConfirm: true,
-    closeOnCancel: true
   },
   function(isConfirm){
     if (isConfirm) {

@@ -43,7 +43,7 @@ function(Marionette, Backbone, Config, I18n) {
           TLib_Name:      {type:'Text', title: $.i18n.t('topicLibelle_field.lib_name'), editorClass: 'form-control', validators: ['required']},
           TLib_FullPath:      {type:'Text', title: $.i18n.t('topicLibelle_field.lib_fullPath'), editorClass: 'form-control'},
           TLib_Definition:       {type:'TextArea', title: $.i18n.t('topicLibelle_field.lib_Definition'), editorClass: 'form-control'},
-          TLib_FK_TTop_ID:      {type: 'Hidden', editorAttrs: {disabled: true}, title: $.i18n.t('topicLibelle_field.lib_FKTopic'), editorClass: 'form-control'},
+          TLib_FK_TTop_ID:      {type: 'Hidden', editorAttrs: {disabled: true}, title: $.i18n.t('topicLibelle_field.lib_FKTopc'), editorClass: 'form-control'},
           TLib_PK_ID:   {type: 'Hidden', editorAttrs: {disabled: true}, title: $.i18n.t('topicLibelle_field.lib_PKLibelle'), editorClass: 'form-control'},
         /*}*/
       };

@@ -8,8 +8,8 @@ define(['marionette',
   'config',
   'i18n',
   'growl',
-  'i18n'],
-function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneForm, ListOfNestedModel, config, I18n, growl) {
+  'sweetAlert'],
+function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneForm, ListOfNestedModel, config, I18n, growl, swal) {
   'use strict';
 
   return Marionette.LayoutView.extend({
@@ -65,40 +65,43 @@ function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneFo
       var _this = this;
       var testGege = this.form.commit();
       var divsAttibutes = $('.file-container');
+      console.log('divsAttibutes', divsAttibutes);
       var allFiles = [];
       if(this.form.validate() == null){
         this.form.commit()
         this.topic.save(null,{
           success: function(data) {
             var fd = new FormData();
-            $.each(divsAttibutes, function(){
-              var theElement = $(this)[0];
-              var theElementField = $(theElement).closest('div .colapsableField')[0];
-              if($(theElementField).attr('class').indexOf('hidden') == -1){
-                var fieldsetContainer = $(this).closest('div .list-item')[0];
-                var inputName = $(fieldsetContainer).find('input[name=TAtt_FieldName]')[0];
-                var attributeName = $(inputName).val();
-                var elem = this;
-                $.each(data.attributes.TAttribute, function(){
-                  if(this.TAtt_FieldName == attributeName){
-                    allFiles.push({id: this.TAtt_PK_ID, file: $(elem)[0].files[0]});
-                    fd.append(this.TAtt_PK_ID, $(elem)[0].files[0]);
-                    return;
-                  }
-                });
-              }
-            });
-            $.ajax({
-              type: 'POST',
-              url: config.servUrl + 'thesaurus/insertFiles',
-              processData: false,
-              contentType: false,
-              data: fd
-            }).done(function() {
-              console.log('done');
-            }).error(function() {
-              console.log('error');
-            });
+            if(divsAttibutes.length){
+              $.each(divsAttibutes, function(){
+                var theElement = $(this)[0];
+                var theElementField = $(theElement).closest('div .colapsableField')[0];
+                if($(theElementField).attr('class').indexOf('hidden') == -1){
+                  var fieldsetContainer = $(this).closest('div .list-item')[0];
+                  var inputName = $(fieldsetContainer).find('input[name=TAtt_FieldName]')[0];
+                  var attributeName = $(inputName).val();
+                  var elem = this;
+                  $.each(data.attributes.TAttribute, function(){
+                    if(this.TAtt_FieldName == attributeName){
+                      allFiles.push({id: this.TAtt_PK_ID, file: $(elem)[0].files[0]});
+                      fd.append(this.TAtt_PK_ID, $(elem)[0].files[0]);
+                      return;
+                    }
+                  });
+                }
+              });
+              $.ajax({
+                type: 'POST',
+                url: config.servUrl + 'thesaurus/insertFiles',
+                processData: false,
+                contentType: false,
+                data: fd
+              }).done(function() {
+                console.log('done');
+              }).error(function() {
+                console.log('error');
+              });
+            }
             var tree = $('#' + config.treeDivId).fancytree('getTree');
             var nodeToUpdate = tree.getNodeByKey('' + _this.topic.attributes.TTop_PK_ID );
             nodeToUpdate.setTitle(_this.topic.attributes.TTop_Name);
@@ -108,7 +111,20 @@ function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneFo
       }
     },
     retour: function() {
-
+      var _this = this;
+      swal({
+        title: 'Are you sure?',
+        text: 'You will loose all th unsaved datas!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'Yes',
+        closeOnConfirm: 'yes'
+      },
+      function() {
+        console.log(this.topic);
+          Backbone.history.navigate('#consultation/' + _this.options.key, true);
+      });
     },
     changeForFile: function(options) {
       var fieldset = $(options.currentTarget).closest('fieldset')[0];

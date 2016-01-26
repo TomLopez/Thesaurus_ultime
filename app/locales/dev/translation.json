@@ -2,7 +2,7 @@
 	"tree":{
 		"checkbox_useless_node":"Noeuds inutiles",
 		"search_placeholder":"Recherche",
-		"search_button":"Rechercher",
+		"search_button":"Réinitialiser recherche",
 		"checkbox_deprecated_node":"Noeuds dépréciés"
 	},
 	"contextualMenu_Label":{
@@ -13,31 +13,38 @@
 	},
 	"menu_item": {
 		"item_search": "Rechercher",
-		"item_createh": "Créer",
+		"item_create": "Créer rootNode",
 		"item_modif": "Modifier",
 		"item_delete": "Supprimer"
 	},
 	"topic_field": {
-		"field_name": "Nom* :",
-		"field_nameFr": "Nom Français* :",
-		"field_nameEn": "Nom Anglais* :",
-		"field_definitionFr": "Definition en français :",
-		"field_definitionEn": "Definition en anglais :",
-		"field_type": "Type :",
-		"field_date": "Date :",
-		"field_fullpath": "Chemin complet :",
-		"field_fullpathEn": "Chemin complet anglais :",
-		"field_parentId": "ID du parent :",
-		"field_branchOrder": "Ordre dans la branche :",
-		"field_isDeprecated": "Est déprécié :",
-		"field_addProperty_label": "Ajouter une propriété :",
+		"creation": "Création",
+		"modification": "Modification",
+		"field_name": "Nom* : ",
+		"field_nameFr": "Nom Français* : ",
+		"field_nameEn": "Nom Anglais* : ",
+		"field_definitionFr": "Definition en français : ",
+		"field_definitionEn": "Definition en anglais : ",
+		"field_type": "Type : ",
+		"field_date": "Date : ",
+		"field_fullpath": "Chemin complet : ",
+		"field_fullpathEn": "Chemin complet anglais : ",
+		"field_parentId": "ID du parent : ",
+		"field_branchOrder": "Ordre dans la branche : ",
+		"field_isDeprecated": "Est déprécié : ",
+		"field_addProperty_label": "Ajouter une propriété : ",
 		"field_addProperty_button": "Nouvelle propriété",
 		"field_isDeprecated_yesValue": "Oui",
 		"field_isDeprecated_noValue": "Non",
 		"zone_libelle": "Traduction",
 		"zone_attribute": "Attributs",
 		"field_attribute_warning_typeChange":"Vous ne pouyvez pas changer le type d'un attribut existant.",
-		"empty_field": "Veuillez saisir tous les champs requis."
+		"empty_field": "Veuillez saisir tous les champs requis.",
+		"success": "La création de __topic__ a été réalisée avec succès.",
+		"btn_modifier": "Modifier",
+		"btn_creer": "Créer",
+		"btn_retour": "Retour",
+		"error_doublon": "Vous ne pouvez créer de terme portant se nom. (doublon)"
 	},
 	"topicLibelle_field":
 	{
@@ -48,6 +55,46 @@
 		"lib_FKTopic":"Clef du topic",
 		"lib_PKLibelle":"Clef du libelle"
 	},
+	"topicAttribute_field":
+	{
+		"field_TAtt_PK_ID":"Clef attribut : ",
+		"field_TAtt_FK_TTop_ID":"Clef du topic : ",
+		"field_TAtt_FieldName":"Nom de l 'attribut : ",
+		"field_TAtt_FieldValue":"Valeur de l'attribut : ",
+		"field_TAtt_DateCreation":"Date de création : ",
+		"field_TAtt_Type":"Type d'attribut : ",
+		"field_TTopicFile":"Fichier joint :"
+	},
+	"topicFile_field":
+	{
+		"field_TTFi_FK_Att_PKID":"Clef du fichier : ",
+		"field_TTFi_Blob":"fichier : ",
+		"field_TTFi_Extension":"type d'extension : ",
+		"error_loading": "Une erreur est survenue lors du chargement du fichier."
+	},
+	"topic_consult": {
+		"consult_title": "Terme : ",
+		"field_name": "Nom : ",
+		"field_nameFr": "Nom Français : ",
+		"field_nameEn": "Nom Anglais : ",
+		"field_nameTrans": "Nom Traduit",
+		"field_definitionFr": "Definition en français : ",
+		"field_definitionEn": "Definition en anglais : ",
+		"field_definition": "Definition : ",
+		"field_type": "Type : ",
+		"field_date": "Date : ",
+		"field_fullpath": "Chemin complet : ",
+		"field_fullpathEn": "Chemin complet anglais : ",
+		"field_fullpathTrans": "Chemin complet traduit : ",
+		"field_parentId": "ID du parent : ",
+		"field_branchOrder": "Ordre dans la branche : ",
+		"field_isDeprecated": "Est déprécié : ",
+		"field_addProperty_label": "Ajouter une propriété : ",
+		"field_addProperty_button": "Nouvelle propriété",
+		"field_isDeprecated_yesValue": "Oui",
+		"field_isDeprecated_noValue": "Non",
+		"field_noInfo": "La traduction n'est pas définie dans votre langue."
+	},
 	"forced_Translation":{
 		"field_legend": "Traduction obligatoire",
 		"field_language": "Langue : ",
@@ -57,53 +104,22 @@
 		"btn_create": "Créer",
 		"btn_back": "Retour"
 	},
-	"topicAttribute_field":
-	{
-		"field_TAtt_PK_ID":"Clef attribut :",
-		"field_TAtt_FK_TTop_ID":"Clef du topic :",
-		"field_TAtt_FieldName":"Nom de l 'attribut :",
-		"field_TAtt_FieldValue":"Valeur de l'attribut :",
-		"field_TAtt_DateCreation":"Date de création :",
-		"field_TAtt_Type":"Type d'attribut :",
-		"field_TTopicFile":"Fichier joint :"
-	},
-	"topicFile_field":
-	{
-		"field_TTFi_FK_Att_PKID":"Clef du fichier :",
-		"field_TTFi_Blob":"fichier :",
-		"field_TTFi_Extension":"type d'extension :",
-		"error_loading": "Une erreur est survenue lors du chargement du fichier."
-	},
-	"topic_consult": {
-		"consult_title": "Terme : ",
-		"field_name": "Nom :",
-		"field_nameFr": "Nom Français :",
-		"field_nameEn": "Nom Anglais :",
-		"field_nameTrans": "Nom Traduit",
-		"field_definitionFr": "Definition en français :",
-		"field_definitionEn": "Definition en anglais :",
-		"field_definition": "Definition :",
-		"field_type": "Type :",
-		"field_date": "Date :",
-		"field_fullpath": "Chemin complet :",
-		"field_fullpathEn": "Chemin complet anglais :",
-		"field_fullpathTrans": "Chemin complet traduit",
-		"field_parentId": "ID du parent :",
-		"field_branchOrder": "Ordre dans la branche :",
-		"field_isDeprecated": "Est déprécié :",
-		"field_addProperty_label": "Ajouter une propriété :",
-		"field_addProperty_button": "Nouvelle propriété",
-		"field_isDeprecated_yesValue": "Oui",
-		"field_isDeprecated_noValue": "Non",
-		"field_noInfo": "La traduction n'est pas définie dans votre langue."
+	"language_consult":{
+		"btn_edit": "Modifier",
+		"btn_create": "Créer",
+		"title": "Langages",
+		"field_id": "Identifiant : ",
+		"field_label": "Nom complet : ",
+		"field_description": "Description : "
 	},
 	"language_edit": {
-		"language": "Langue :",
-		"field_TLan_PK_Name": "ID de la langue (ex \"fr\",\"en\")* :",
-		"field_label": "Label de la langue* :",
-		"field_description": "Description de la langue :",
+		"language": "Langue : ",
+		"field_TLan_PK_Name": "ID de la langue (ex \"fr\",\"en\")* : ",
+		"field_label": "Label de la langue* : ",
+		"field_description": "Description de la langue : ",
 		"btn_edit": "Modifier",
-		"btn_back": "retour",
+		"btn_back": "Retour",
+		"btn_create": "Créer",
 		"success_message": "Le langage __lng__ à bien été enregistrer.",
 		"error_message" : "Une erreur est survenue durant la sauvegarde de __lng__."
 	},
@@ -112,6 +128,7 @@
 		"status_language_error":"Le déplacement du terme __topicName__ n'as pu être effectuer. Il contient plus de traductions que le terme de destination.",
 		"status_doublon_error":"Le déplacement du terme __topicName__ n'as pu être effectuer. Il existe un autre terme portant le meme nom pour se Top Concept.",
 		"status_domain_error":"Le déplacement du terme __topicName__ n'as pu être effectuer. Le drag'n'drop ne peut créer de domaines.",
+		"status_top_error":"Le déplacement du terme __topicName__ n'as pu être effectuer. Il existe un autre terme portant le meme nom pour se Domaine.",
 		"status_unknown_error":"Le déplacement du terme __topicName__ n'as pu être effectuer. Erreur inconnue.",
 		"swal_title": "Etes vous sur?",
 		"swal_text": "Le déplacement de se terme est définitif.",

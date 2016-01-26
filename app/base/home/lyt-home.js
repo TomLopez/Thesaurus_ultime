@@ -39,6 +39,7 @@ function(Marionette,Backbone) {
 					}
 				});
 			}
+			$('#divAccueil').i18n();
 		},
 		menuItemClick: function(e){
 			console.log(e);

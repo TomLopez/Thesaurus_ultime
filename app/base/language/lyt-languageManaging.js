@@ -1,5 +1,5 @@
-define(['marionette', 'backbone', 'modLanguage', 'config', 'growl', 'i18n'],
-function(Marionette, Backbone, ModLanguage, config, Growl, I18n) {
+define(['marionette', 'backbone', 'modLanguage', 'config', 'growl', 'i18n', 'sweetAlert'],
+function(Marionette, Backbone, ModLanguage, config, Growl, I18n, swal) {
   'use strict';
 
   return Marionette.LayoutView.extend({
@@ -14,13 +14,15 @@ function(Marionette, Backbone, ModLanguage, config, Growl, I18n) {
       this.options = options;
       this.model = window.app.user;
       console.log('languageOptions',options);
-      if (this.options.key) {
+      if (this.options.key && this.options.key != 0) {
         var language = new ModLanguage({id: this.options.key});
         language.fetch({
           async: false
         });
         this.language = language;
-        console.log('language',language);
+      }else {
+        var language = new ModLanguage();
+        this.language = language;
       }
     },
 
@@ -52,13 +54,15 @@ function(Marionette, Backbone, ModLanguage, config, Growl, I18n) {
       }).render();
       this.form = form;
       $('#languageContainer').append(form.el);
+      $('#contLanguage').i18n();
     },
     validation: function() {
       if(this.form.validate() == null){
         this.form.commit();
         this.language.save(null,{
           success: function(data){
-            $.growl.notice({message: I18n.t('language_edit.success_message',{lng: data})});
+            console.log("lang data", data);
+            $.growl.notice({message: I18n.t('language_edit.success_message',{lng: data.attributes.TLan_PK_Name})});
             Backbone.history.navigate('#language', true);
           },
           error: function(){
@@ -68,6 +72,22 @@ function(Marionette, Backbone, ModLanguage, config, Growl, I18n) {
       }else{
         $.growl.error({message : "topic_field.empty_field"});
       }
+    },
+    retour: function(){
+      var _this = this;
+      swal({
+        title: 'Are you sure?',
+        text: 'You will loose all th unsaved datas!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'Yes',
+        closeOnConfirm: 'yes'
+      },
+      function() {
+        console.log(this.topic);
+          Backbone.history.navigate('#language', true);
+      });
     }
   });
 });

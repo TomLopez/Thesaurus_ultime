@@ -1,16 +1,18 @@
 define(['marionette', 'backbone', 'modLanguage', 'config', 'i18n'],
-function(Marionette, Backbone, ModLanguage, config) {
+function(Marionette, Backbone, ModLanguage, config, i18n) {
   'use strict';
 
   return Marionette.LayoutView.extend({
     template: 'app/base/language/tpl/tpl-language.html',
     className: 'consultation-page ns-full-height',
     events: {
+      'click #creation': 'creation'
     },
 
     initialize: function(options) {
       this.options = options;
       this.model = window.app.user;
+      var _this = this;
       console.log('languageOptions',options);
       if (!options.key) {
       var LanguageColl = Backbone.Collection.extend({
@@ -40,6 +42,30 @@ function(Marionette, Backbone, ModLanguage, config) {
         });
         this.languages = languages;
       }
+      this.LanguageChildView = Backbone.Marionette.ItemView.extend({
+        template: 'app/base/language/tpl/tpl-oneLanguage.html',
+        events:{
+          'click .btn': 'goManage'
+        },
+        serializeData: function(data) {
+          if (!_this.options.key) {
+            var data = this.model.attributes;
+          }else {
+            var data = this.collection.attributes;
+          }
+          return data;
+        },
+        goManage: function(e){
+          if (this.model) {
+            app.router.navigate('#language/manage/' + this.model.attributes.TLan_PK_Name,{trigger: true});
+          }else {
+            app.router.navigate('#language/manage/' + this.collection.attributes.TLan_PK_Name,{trigger: true});
+          }
+        },
+        onRender: function(){
+          this.$el.i18n();
+        }
+      });
       /*var topic = new ModTopic({id:options.key});
       topic.fetch({async:false});
       this.topic = topic;*/
@@ -48,7 +74,10 @@ function(Marionette, Backbone, ModLanguage, config) {
     serializeData: function(){
       //return {topic : this.topic.attributes};
     },
-
+/*    render: function(){
+      $('#contLanguage').i18n();
+    },
+*/
     animateIn: function() {
       this.$el.find('#schtroudel').animate(
       {opacity: 1},
@@ -69,35 +98,14 @@ function(Marionette, Backbone, ModLanguage, config) {
 
     onShow: function(options) {
       var _this = this;
-      var LanguageChildView = Backbone.Marionette.ItemView.extend({
-        template: 'app/base/language/tpl/tpl-oneLanguage.html',
-        events:{
-          'click .btn': 'goManage'
-        },
-        serializeData: function(data) {
-          if (!_this.options.key) {
-            var data = this.model.attributes;
-          }else {
-            var data = this.collection.attributes;
-          }
-          return data;
-        },
-        goManage: function(e){
-          if (this.model) {
-            app.router.navigate('#language/manage/' + this.model.attributes.TLan_PK_Name,{trigger: true});
-          }else {
-            app.router.navigate('#language/manage/' + this.collection.attributes.TLan_PK_Name,{trigger: true});
-          }
-        }
-      });
       if (this.options.key) {
-        var vue = new LanguageChildView({collection: this.languages});
+        var vue = new this.LanguageChildView({collection: this.languages});
         vue.render();
         this.$el.find('#languageContainer').append(vue.el);
       }else {
         var LanguageCollectionView = Backbone.Marionette.CollectionView.extend({
           //tagName: 'ul',
-          childView: LanguageChildView,
+          childView: this.LanguageChildView,
           childViewContainer: '#allLanguages',
           template: 'app/base/home/tpl/tpl-languagesContainer.html',
           serializeData: function(){
@@ -110,8 +118,12 @@ function(Marionette, Backbone, ModLanguage, config) {
         this.$el.find('#languageContainer').append(languageCollView.el);
       }
       //}else{
+      $('#contLanguage').i18n();
 
       //}
     },
+    creation: function(options){
+      Backbone.history.navigate('#language/manage/0', true);
+    }
   });
 });
