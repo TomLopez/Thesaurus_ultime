@@ -1,5 +1,5 @@
-define(['marionette', 'backbone', 'translater', 'config', 'modTopicLibelle', 'modAttribute', 'modTopicFile', 'listOfNestedModel','i18n','transition'],
-  function(Marionette, Backbone, Translater, Config, ModTopicLibelle, ModAttribute, ModTopicFile, ListOfNestedModel,I18n) {
+define(['marionette', 'backbone', 'translater', 'config', 'modTopicLibelle', 'modAttribute', 'modTopicFile', 'listOfNestedModel', 'listOfSubForms', 'i18n','transition'],
+  function(Marionette, Backbone, Translater, Config, ModTopicLibelle, ModAttribute, ModTopicFile, ListOfNestedModel, ListOfSubForms, I18n) {
 
     return Backbone.Model.extend({
       urlRoot: Config.servUrl + 'topic',
@@ -41,10 +41,13 @@ define(['marionette', 'backbone', 'translater', 'config', 'modTopicLibelle', 'mo
             title: $.i18n.t("topic_field.zone_libelle")
           },
           TAttribute:{
-            type: 'ListOfNestedModel',
+            type: 'ListOfSubForms',
             subschema: (new ModAttribute()).schema,
             fieldClass: 'colapsableField',
-            title: $.i18n.t("topic_field.zone_attribute")
+            title: $.i18n.t("topic_field.zone_attribute"),
+            validators: [],
+            editorAttrs: {},
+            editorClass: 'colapsableField'
           }
         }
       }

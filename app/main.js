@@ -50,7 +50,8 @@ require.config({
     jquery182: './vendors/jquery-1.8.2',
     jqueryui182: './vendors/jquery-ui-1.8.24.min',
     sweetAlert: '../bower_components/sweetalert/lib/sweet-alert.min',
-    listOfNestedModel: '../bower_components/nsBackbonesTools/ListOfNestedModel/ListOfNestedModel'
+    listOfNestedModel: '../bower_components/nsBackbonesTools/ListOfNestedModel/ListOfNestedModel',
+    listOfSubForms: '../bower_components/nsBackbonesTools/ListOfSubForms/listOfSubForms'
   },
 
   shim: {
@@ -163,7 +164,7 @@ require(['app', 'templates','translater','config'],
           //user: userDatas.Name,
           user: 'Schtroudel Meister',
           //language: userDatas.UserLanguage,
-          language: 'en',
+          language: 'fr',
           //status: userDatas.RoleInThes,
           status: 'Administrateur'
         //status: 'SuperUser'

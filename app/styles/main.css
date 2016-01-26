@@ -10825,7 +10825,7 @@ fieldset label {
   animation: ripple 0.65s linear;
 }
 #divAccueil {
-  background: white;
+  background: #bdc3c7;
   width: inherit;
   height: inherit;
   text-align: center;
@@ -10961,6 +10961,9 @@ header .withoutInput input {
 }
 #contModif .btn-success {
   margin-right: 100px;
+}
+.removeButton button {
+  display: none;
 }
 #contCreat {
   background: white;
@@ -11278,8 +11281,60 @@ div[data-error] {
 }
 /*==========  SweetAlert  ==========*/
 /*==========  treeview  ==========*/
-#rgTree {
+#treeView {
+  margin-left: auto;
+  margin-right: auto;
+}
+#treeView ul.fancytree-treefocus {
+  outline: none;
+}
+#treeView ul.fancytree-container {
+  font-size: 12pt;
+  width: 80%;
+  border: 0;
+}
+#treeView ul.fancytree-container li {
+  padding: 0px;
+  border: 0px;
+}
+#treeView ul.fancytree-container li > span {
+  cursor: pointer;
+  padding: 8px;
+  background: #fff;
+  border: none;
+  border-bottom: 1px solid #ccc!important;
+}
+#treeView ul.fancytree-container li > span:focus,
+#treeView ul.fancytree-container li > span:hover {
+  border-bottom: 1px solid #ccc!important;
+}
+#treeView ul.fancytree-container li > span.fancytree-expanded {
+  background: #ccc;
+}
+#treeView ul.fancytree-container span.fancytree-node {
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+#treeView ul.fancytree-container span.fancytree-node span.fancytree-title {
+  background: none;
+  border: 0;
+}
+#treeView ul.fancytree-container span.fancytree-node:hover {
   background-color: #bdc3c7;
+}
+#treeView ul.fancytree-container span.fancytree-expanded {
+  background: #bdc3c7;
+}
+#treeView ul.fancytree-container span.fancytree-active {
+  background: black !important;
+  font-style: white !important;
+  color: white;
+}
+#treeView ul.fancytree-container ul {
+  width: inherit;
+}
+#rgTree {
+  background-color: #ffffff;
 }
 #rgTree .ui-menu .ui-menu-item {
   text-align: center;

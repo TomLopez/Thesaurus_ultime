@@ -18,8 +18,8 @@ function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneFo
     events: {
       'click #validation': 'validation',
       'click #retour': 'retour',
-      'change select[id=TAtt_Type]':'changeForFile',
-      'focus select[id=TAtt_Type]':'testForFile'
+      'change select[name=TAtt_Type]':'changeForFile',
+      'focus select[name=TAtt_Type]':'testForFile'
     },
 
     initialize: function(options) {
@@ -71,18 +71,25 @@ function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneFo
         this.form.commit()
         this.topic.save(null,{
           success: function(data) {
+            console.log('data',data);
             var fd = new FormData();
             if(divsAttibutes.length){
               $.each(divsAttibutes, function(){
+                console.log('this',this);
                 var theElement = $(this)[0];
                 var theElementField = $(theElement).closest('div .colapsableField')[0];
+                console.log('theElementField',theElementField);
                 if($(theElementField).attr('class').indexOf('hidden') == -1){
-                  var fieldsetContainer = $(this).closest('div .list-item')[0];
-                  var inputName = $(fieldsetContainer).find('input[name=TAtt_FieldName]')[0];
+                  var fieldsetContainer = $(theElementField).parent()[0];
+                  console.log("fieldsetConteain", fieldsetContainer);
+                  var inputName = $(fieldsetContainer).find('input[id$=TAtt_FieldName]')[0];
                   var attributeName = $(inputName).val();
                   var elem = this;
+                  console.log('attributeName',attributeName);
                   $.each(data.attributes.TAttribute, function(){
+                    console.log('this.each', this);
                     if(this.TAtt_FieldName == attributeName){
+                      console.log('$elem',$(elem));
                       allFiles.push({id: this.TAtt_PK_ID, file: $(elem)[0].files[0]});
                       fd.append(this.TAtt_PK_ID, $(elem)[0].files[0]);
                       return;
@@ -90,6 +97,8 @@ function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneFo
                   });
                 }
               });
+console.log(fd);
+              return;
               $.ajax({
                 type: 'POST',
                 url: config.servUrl + 'thesaurus/insertFiles',
@@ -129,8 +138,11 @@ function(Marionette, Backbone, Translater, ModTopic, modTopicLibelle, BackboneFo
     changeForFile: function(options) {
       var fieldset = $(options.currentTarget).closest('fieldset')[0];
       var fileContainer = $(fieldset).find('.colapsableField')[0];
-      var attrValuelabel = $(fieldset).find('label[for=TAtt_FieldValue]')[0];
+      console.log('fileContainer', fileContainer);
+      var attrValuelabel = $(fieldset).find('label[for$=TAtt_FieldValue]')[0];
+      console.log('attrValuelabel',attrValuelabel);
       var attrValueZone = $(attrValuelabel).parent()[0];
+      console.log('attrValueZone',attrValueZone);
       if ($(fileContainer).attr('class').indexOf('hidden') != -1) {
         if ($(options.currentTarget).val() != 1) {
           $(fileContainer).removeClass('hidden');
