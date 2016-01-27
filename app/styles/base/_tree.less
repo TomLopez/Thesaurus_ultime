@@ -1,0 +1,63 @@
+#treeView{
+	margin-left: auto;
+	margin-right: auto;
+	ul.fancytree-treefocus{
+		outline: none;
+	}
+	ul.fancytree-container{
+		font-size: 12pt;
+		width: 80%;
+		border: 0;
+		li{
+			padding: 0px;
+			border: 0px;
+
+			&>span{
+				cursor: pointer;
+				padding: 8px;
+				background: #fff;
+				border: none;
+				border-bottom: 1px solid #ccc!important;
+				&:focus, &:hover{
+
+					border-bottom: 1px solid #ccc!important;
+				}
+				&.fancytree-expanded{
+					background: #ccc;
+				}
+
+			}
+
+
+		}
+
+
+		span.fancytree-node{
+			width: 100%;
+			border-bottom: 1px solid black;
+			span.fancytree-title{
+			background: none;
+			border: 0;
+
+		}
+		}
+		span.fancytree-node:hover{
+			background-color: @silver;
+		}
+		span.fancytree-expanded{
+			background:@silver;
+		}
+		span.fancytree-active{
+			background: black !important;
+			font-style: white !important;
+			color: white;
+		}
+		ul{
+			width: inherit;
+		}
+
+	}
+
+}
+
+
